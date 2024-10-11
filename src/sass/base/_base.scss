@@ -1,0 +1,14 @@
+// Global display
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0 70px;
+
+  @include mobile {
+    padding: 0 20px;
+  }
+}

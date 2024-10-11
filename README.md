@@ -9,7 +9,6 @@ Il a été créé avec ReactJS + React-Router + Vite + SASS
 ### Installation des dépendances
 
 ```
-cd frontend
 npm install
 ```
 

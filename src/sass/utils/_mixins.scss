@@ -1,0 +1,21 @@
+// Responsive Breakpoints mixins
+@mixin tablet {
+  @media only screen and (min-width: calc($screen-mobile + 1px)) and (max-width: $screen-tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media only screen and (max-width: $screen-mobile) {
+    @content;
+  }
+}
+
+// Font mixins
+@mixin logoFont {
+  font-family: $font-delius-unicase;
+}
+
+@mixin bodyFont {
+  font-family: $font-montserrat;
+}
