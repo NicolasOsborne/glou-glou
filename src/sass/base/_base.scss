@@ -13,11 +13,5 @@ body {
 }
 
 main {
-  // flex: 1;
   height: 100%;
-  margin: 0 70px;
-
-  @include mobile {
-    margin: 0 20px;
-  }
 }
