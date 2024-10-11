@@ -1,0 +1,21 @@
+.categories-nav {
+  width: 100vw;
+  height: 80px;
+  padding: 0 70px;
+  background-color: $color-white;
+  @include border;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @include tablet {
+    padding: 0 20px;
+  }
+
+  @include mobile {
+    padding: 0 20px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+}

@@ -1,4 +1,11 @@
 // Responsive Breakpoints mixins
+
+@mixin small-desktop {
+  @media only screen and (min-width: calc($screen-tablet + 1px)) and (max-width: $screen-small-desktop) {
+    @content;
+  }
+}
+
 @mixin tablet {
   @media only screen and (min-width: calc($screen-mobile + 1px)) and (max-width: $screen-tablet) {
     @content;

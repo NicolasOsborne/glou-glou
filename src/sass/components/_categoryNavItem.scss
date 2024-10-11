@@ -1,0 +1,77 @@
+.category-item {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+
+  &_icon {
+    font-size: 24px;
+    color: $color-black;
+  }
+
+  &_name {
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &_chevron {
+    font-size: 20px;
+    color: $color-black;
+  }
+
+  &:hover {
+    .category-item_icon,
+    .category-item_name,
+    .category-item_chevron {
+      color: $color-primary;
+    }
+  }
+
+  @include small-desktop {
+    gap: 10px;
+    .category-item {
+      &_icon {
+        font-size: 14px;
+      }
+
+      &_name,
+      &_chevron {
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+  }
+
+  @include tablet {
+    gap: 6px;
+    .category-item {
+      &_icon {
+        font-size: 14px;
+      }
+
+      &_name,
+      &_chevron {
+        font-size: 12px;
+        font-weight: 700;
+      }
+    }
+  }
+
+  @include mobile {
+    gap: 4px;
+
+    .category-item {
+      &_icon {
+        font-size: 10px;
+      }
+
+      &_name,
+      &_chevron {
+        font-size: 10px;
+        font-weight: 700;
+      }
+    }
+  }
+}
