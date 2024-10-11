@@ -10,6 +10,14 @@ const Header = () => {
           alt="Logo Glou & Glou"
           height={70}
           width={260}
+          className="desktop-logo"
+        />
+        <img
+          src="./src/assets/logos/logo-mobile.svg"
+          alt="Logo Glou & Glou"
+          height={60}
+          width={48}
+          className="mobile-logo"
         />
       </Link>
       <nav className="header-nav">

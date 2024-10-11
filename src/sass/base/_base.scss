@@ -4,3 +4,20 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+}
+
+main {
+  // flex: 1;
+  height: 100%;
+  margin: 0 70px;
+
+  @include mobile {
+    margin: 0 20px;
+  }
+}

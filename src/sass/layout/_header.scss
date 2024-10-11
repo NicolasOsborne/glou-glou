@@ -10,8 +10,18 @@ header {
   align-items: center;
 
   .header-logo {
-    height: 70px;
-    width: 260px;
+    img {
+      height: 70px;
+      width: 260px;
+    }
+
+    .desktop-logo {
+      display: inline-block;
+    }
+
+    .mobile-logo {
+      display: none;
+    }
   }
 
   .header-nav {
@@ -45,6 +55,35 @@ header {
       flex-direction: row;
       align-items: center;
       gap: 5px;
+    }
+  }
+
+  @include mobile {
+    padding: 0 20px;
+
+    .header-logo {
+      img {
+        height: 60px;
+        width: 48px;
+      }
+
+      .desktop-logo {
+        display: none;
+      }
+
+      .mobile-logo {
+        display: inline-block;
+      }
+    }
+
+    .header-nav {
+      gap: 20px;
+
+      &_login,
+      &_cart {
+        font-size: 14px;
+        padding: 12px;
+      }
     }
   }
 }
