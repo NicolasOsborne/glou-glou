@@ -1,5 +1,6 @@
 import Filters from "../components/Filters";
 import Hero from "../components/Hero";
+import ProductList from "../components/ProductList";
 
 const Home = () => {
   return (
@@ -7,6 +8,7 @@ const Home = () => {
       <Hero />
       <div className="homepage-content-container">
         <Filters />
+        <ProductList />
       </div>
     </section>
   );
