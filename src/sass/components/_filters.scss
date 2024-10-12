@@ -1,7 +1,7 @@
 .filters-card {
   @include cardShadow;
   width: 300px;
-  height: 600px;
+  height: fit-content;
   padding: 35px;
   display: flex;
   flex-direction: column;

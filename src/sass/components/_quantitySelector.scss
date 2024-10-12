@@ -1,0 +1,40 @@
+.quantity-selector {
+  height: 45px;
+  width: 175px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid $color-primary;
+  border-radius: 5px;
+
+  button {
+    cursor: pointer;
+    border: none;
+    background-color: $color-secondary;
+    height: 100%;
+    width: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &_decrement {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  &_quantity {
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  &_increment {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 30px;
+    font-weight: 700;
+  }
+}

@@ -10,7 +10,7 @@ const ProductCard = ({
   productPrice,
 }) => {
   return (
-    <a className="product-card" href="/product/:productId">
+    <a className="product-card" href="/product/:id">
       <NewTag />
       <div className="product-card_image">
         <img

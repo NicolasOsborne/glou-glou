@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { FaRegUser, FaShoppingCart } from "react-icons/fa";
 import CategoriesNav from "./CategoriesNav";
+import Logo from "../assets/logos/logo-header.svg";
+import MobileLogo from "../assets/logos/logo-mobile.svg";
 
 const Header = () => {
   return (
@@ -8,14 +10,14 @@ const Header = () => {
       <header>
         <Link to="/" className="header-logo">
           <img
-            src="./src/assets/logos/logo-header.svg"
+            src={Logo}
             alt="Logo Glou & Glou"
             height={70}
             width={260}
             className="desktop-logo"
           />
           <img
-            src="./src/assets/logos/logo-mobile.svg"
+            src={MobileLogo}
             alt="Logo Glou & Glou"
             height={60}
             width={48}
