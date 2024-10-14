@@ -1,25 +1,26 @@
-@import "utils/variables";
-@import "utils/mixins";
+@import 'utils/variables';
+@import 'utils/mixins';
 
-@import "base/base";
-@import "base/typography";
+@import 'base/base';
+@import 'base/typography';
 
-@import "layout/header";
-@import "layout/hero";
-@import "layout/footer";
+@import 'layout/header';
+@import 'layout/hero';
+@import 'layout/footer';
 
-@import "pages/home";
-@import "pages/product";
-@import "pages/cart";
-@import "pages/confirmation";
-@import "pages/login";
+@import 'pages/home';
+@import 'pages/product';
+@import 'pages/cart';
+@import 'pages/confirmation';
+@import 'pages/login';
 
-@import "components/socialMedia";
-@import "components/categoryNavItem";
-@import "components/categoriesNav";
-@import "components/filters";
-@import "components/productList";
-@import "components/productCard";
-@import "components/button";
-@import "components/newTag";
-@import "components/quantitySelector";
+@import 'components/socialMedia';
+@import 'components/categoryNavItem';
+@import 'components/categoriesNav';
+@import 'components/filters';
+@import 'components/productList';
+@import 'components/productCard';
+@import 'components/button';
+@import 'components/newTag';
+@import 'components/quantitySelector';
+@import 'components/cartItem';

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const QuantitySelector = () => {
   const [productQuantity, setProductQuantity] = useState(1)
@@ -24,6 +25,10 @@ const QuantitySelector = () => {
       </button>
     </div>
   )
+}
+
+QuantitySelector.propTypes = {
+  productQuantity: PropTypes.number.isRequired,
 }
 
 export default QuantitySelector
