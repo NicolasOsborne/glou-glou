@@ -6,6 +6,7 @@ import ProductPage from './pages/Product'
 import Cart from './pages/Cart'
 import Confirmation from './pages/Confirmation'
 import Login from './pages/Login'
+import Error from './pages/Error'
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/confirmation' element={<Confirmation />} />
           <Route path='/login' element={<Login />} />
-          {/* <Route path='*' element={<Error />} /> */}
+          <Route path='*' element={<Error />} />
         </Routes>
       </main>
       <Footer />
