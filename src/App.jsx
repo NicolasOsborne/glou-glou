@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import ProductPage from './pages/Product'
 import Cart from './pages/Cart'
 import Confirmation from './pages/Confirmation'
+import Login from './pages/Login'
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route path='/product/:id' element={<ProductPage />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/confirmation' element={<Confirmation />} />
-          {/* <Route path='/login' element={<Login />} /> */}
+          <Route path='/login' element={<Login />} />
           {/* <Route path='*' element={<Error />} /> */}
         </Routes>
       </main>
