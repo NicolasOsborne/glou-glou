@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import ProductPage from './pages/Product'
 import Cart from './pages/Cart'
+import Confirmation from './pages/Confirmation'
 
 function App() {
   return (
@@ -14,8 +15,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/product/:id' element={<ProductPage />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/confirmation' element={<Confirmation />} />
           {/* <Route path='/login' element={<Login />} /> */}
-          {/* <Route path='/confirmation' element={<Confirmation />} /> */}
           {/* <Route path='*' element={<Error />} /> */}
         </Routes>
       </main>

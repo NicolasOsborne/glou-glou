@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 
 import CartItem from '../components/CartItem'
 import Button from '../components/Button'
@@ -10,6 +11,14 @@ import SoftDrinkImage from '../assets/products/soft-drink.svg'
 import HotDrinkImage from '../assets/products/hot-drink.svg'
 
 const Cart = ({ itemsQuantity, itemsSubTotal, cartTotal }) => {
+  // Hook permettant de gérer la redirection vers la page de confirmation de la commande
+  const navigate = useNavigate()
+
+  // Gestion du click sur le bouton de validation de la commande
+  const handleCartValidation = () => {
+    navigate('/confirmation')
+  }
+
   return (
     <section className='cart-page'>
       <div className='cart-items'>
@@ -65,6 +74,7 @@ const Cart = ({ itemsQuantity, itemsSubTotal, cartTotal }) => {
             </div>
             <Button
               buttonText='Valider la commande'
+              onClick={handleCartValidation}
               className='cart-total_button'
             />
           </div>
