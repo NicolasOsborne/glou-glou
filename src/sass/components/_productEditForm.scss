@@ -1,0 +1,44 @@
+.product-edit-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 40px 32px;
+  width: 100%;
+
+  input,
+  textarea {
+    padding: 10px;
+    border: 2px solid $color-primary;
+    font-family: $font-montserrat;
+
+    &:focus {
+      border: 2px solid $color-secondary;
+    }
+  }
+
+  &_name {
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  &_category {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  &_description {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  &_price {
+    font-size: 36px;
+    font-weight: 700;
+    width: 50%;
+  }
+
+  &_button {
+    height: 45px;
+  }
+}

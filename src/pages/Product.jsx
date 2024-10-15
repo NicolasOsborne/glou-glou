@@ -10,14 +10,21 @@ import AlcoholImage from '../assets/products/alcohol.svg'
 import SoftDrinkImage from '../assets/products/soft-drink.svg'
 import HotDrinkImage from '../assets/products/hot-drink.svg'
 
+import { FaRegEdit } from 'react-icons/fa'
+import { IoClose } from 'react-icons/io5'
+
 import products from '../mockDatabase/products.json'
 
 import { useContext, useState } from 'react'
 import { CartContext } from '../features/CartContext'
+import { LoginContext } from '../features/LoginContext'
+import ProductEditForm from '../components/ProductEditForm'
 
 const ProductPage = () => {
+  // Gestion de la redirection
   const navigate = useNavigate()
 
+  // Récupérer l'id du produit dans l'URL
   const { id } = useParams()
   const product = products.find((product) => product.id === parseInt(id))
 
@@ -25,6 +32,7 @@ const ProductPage = () => {
     navigate('/error')
   }
 
+  // Définir les images en fonction de la catégorie du produit
   const getProductImageSrc = (category) => {
     switch (category) {
       case 1:
@@ -76,6 +84,7 @@ const ProductPage = () => {
     }
   }
 
+  // Gestion de l'ajout de produits au panier
   const { addItemToCart } = useContext(CartContext)
   const [quantity, setQuantity] = useState(1)
 
@@ -93,6 +102,19 @@ const ProductPage = () => {
     })
   }
 
+  // Gestion du mode édition en tant qu'admin
+  const { isLoggedIn } = useContext(LoginContext)
+
+  const [isEditMode, setIsEditMode] = useState(false)
+
+  const handleOpenEditMode = () => {
+    setIsEditMode(true)
+  }
+
+  const handleCloseEditMode = () => {
+    setIsEditMode(false)
+  }
+
   return (
     <section className='product-page'>
       <div className='product-page_content-container'>
@@ -107,32 +129,60 @@ const ProductPage = () => {
             />
           </div>
           <div className='product-details'>
-            <h2 className='product-details_name'>{product.name}</h2>
-            <h3 className='product-details_category'>
-              {getProductCategory(product.category)}
-            </h3>
-            <p className='product-details_description'>{product.description}</p>
-            <p className='product-details_price'>
-              {product.price.toFixed(2)} €
-            </p>
-            <p
-              className={`product-details_status ${
-                product.quantity > 0 ? 'in-stock' : 'out-of-stock'
-              }`}
-            >
-              {product.quantity > 0 ? 'En stock' : 'Rupture de stock'}
-            </p>
-            <div className='product-details_add-to-cart-container'>
-              <QuantitySelector
-                value={quantity}
-                onChange={handleQuantityChange}
+            {isLoggedIn &&
+              (isEditMode ? (
+                <IoClose
+                  size={24}
+                  className='close-edit-mode'
+                  onClick={handleCloseEditMode}
+                />
+              ) : (
+                <FaRegEdit
+                  size={24}
+                  className='open-edit-mode'
+                  onClick={handleOpenEditMode}
+                />
+              ))}
+            {isEditMode ? (
+              <ProductEditForm
+                productName={product.name}
+                productCategory={getProductCategory(product.category)}
+                productDescription={product.description}
+                productPrice={product.price}
+                productStock={product.stock}
               />
-              <Button
-                buttonText='Ajouter au panier'
-                onClick={handleAddToCart}
-                className='product-details_add-to-cart_button'
-              />
-            </div>
+            ) : (
+              <>
+                <h2 className='product-details_name'>{product.name}</h2>
+                <h3 className='product-details_category'>
+                  {getProductCategory(product.category)}
+                </h3>
+                <p className='product-details_description'>
+                  {product.description}
+                </p>
+                <p className='product-details_price'>
+                  {product.price.toFixed(2)} €
+                </p>
+                <p
+                  className={`product-details_status ${
+                    product.stock > 0 ? 'in-stock' : 'out-of-stock'
+                  }`}
+                >
+                  {product.stock > 0 ? 'En stock' : 'Rupture de stock'}
+                </p>
+                <div className='product-details_add-to-cart-container'>
+                  <QuantitySelector
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                  />
+                  <Button
+                    buttonText='Ajouter au panier'
+                    onClick={handleAddToCart}
+                    className='product-details_add-to-cart_button'
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

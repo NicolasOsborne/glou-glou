@@ -41,6 +41,15 @@
         padding: 40px 32px;
         border-radius: 5px;
         @include cardShadow;
+        position: relative;
+
+        .open-edit-mode,
+        .close-edit-mode {
+          position: absolute;
+          top: 25px;
+          right: 25px;
+          cursor: pointer;
+        }
 
         &_name {
           font-size: 30px;
