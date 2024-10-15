@@ -1,12 +1,23 @@
 import { Link, NavLink } from 'react-router-dom'
+
 import { FaRegUser, FaShoppingCart } from 'react-icons/fa'
+
 import CategoriesNav from './CategoriesNav'
+
 import Logo from '../assets/logos/logo-header.svg'
 import MobileLogo from '../assets/logos/logo-mobile.svg'
+
 import { useContext } from 'react'
 import { CartContext } from '../features/CartContext'
+import { LoginContext } from '../features/LoginContext'
 
 const Header = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext)
+
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+  }
+
   const { cart } = useContext(CartContext)
 
   const calculateTotalQuantity = () => {
@@ -37,10 +48,21 @@ const Header = () => {
           />
         </Link>
         <nav className='header-nav'>
-          <NavLink to='/login' className='header-nav_login'>
-            <FaRegUser />
-            Connexion
-          </NavLink>
+          {isLoggedIn ? (
+            <NavLink
+              to='/'
+              className='header-nav_logout'
+              onClick={handleLogout}
+            >
+              <FaRegUser />
+              Déconnexion
+            </NavLink>
+          ) : (
+            <NavLink to='/login' className='header-nav_login'>
+              <FaRegUser />
+              Connexion
+            </NavLink>
+          )}
           <NavLink to='/cart' className='header-nav_cart'>
             <FaShoppingCart />
             Panier ({calculateTotalQuantity()})

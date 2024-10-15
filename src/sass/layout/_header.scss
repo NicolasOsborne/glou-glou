@@ -43,6 +43,20 @@ header {
       gap: 5px;
     }
 
+    &_logout {
+      padding: 14px;
+      background-color: $color-primary;
+      color: $color-white;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid $color-black;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+
     &_cart {
       padding: 14px;
       background-color: $color-primary;

@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 
 import users from '../mockDatabase/users.json'
+import { LoginContext } from '../features/LoginContext'
 
 const Login = () => {
   const navigate = useNavigate()
 
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const { setIsLoggedIn } = useContext(LoginContext)
 
   const handleLogin = (e) => {
     e.preventDefault()
