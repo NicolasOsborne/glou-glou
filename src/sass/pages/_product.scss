@@ -62,15 +62,16 @@
           font-weight: 700;
         }
 
-        &_in-stock {
+        &_status {
           font-size: 20px;
           font-weight: 600;
+        }
+
+        &_status.in-stock {
           color: $color-green;
         }
 
-        &_out-of-stock {
-          font-size: 20px;
-          font-weight: 600;
+        &_status.out-of-stock {
           color: $color-red;
         }
 

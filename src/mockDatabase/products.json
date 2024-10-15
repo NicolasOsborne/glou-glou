@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "West Coast IPA",
+    "category": 1,
+    "price": 6.3,
+    "description": "Bière aggressivement houblonnée au Nelson Sauvin, Motueka et Riwaka.",
+    "quantity": 49
+  },
+  {
+    "id": 2,
+    "name": "Czech Pilsner",
+    "category": 1,
+    "price": 4.2,
+    "description": "Bière blonde, limpide et céréalière, dans la pure tradition tchèque !",
+    "quantity": 24
+  },
+  {
+    "id": 3,
+    "name": "Syrah",
+    "category": 2,
+    "price": 16.4,
+    "description": "Vin rouge nature issu d'un cépage 100% Syrah.",
+    "quantity": 4
+  },
+  {
+    "id": 4,
+    "name": "Club Mate",
+    "category": 4,
+    "price": 3.8,
+    "description": "Boisson gazeuse typiquement berlinoise, faite à base de Yerba Mate, naturellement riche en caféine.",
+    "quantity": 36
+  },
+  {
+    "id": 5,
+    "name": "Mezcal",
+    "category": 3,
+    "price": 18.6,
+    "description": "Alcool typique du Mexique, avec son goût fumé et terreux inimitable !",
+    "quantity": 12
+  },
+  {
+    "id": 6,
+    "name": "Blue Jamaica",
+    "category": 5,
+    "price": 9.2,
+    "description": "Considéré comme l'un des meilleurs cafés du monde, mais aussi l'un des plus rares ! Osez goûter l'exceptionnel !",
+    "quantity": 9
+  },
+  {
+    "id": 7,
+    "name": "Pale Ale",
+    "category": 1,
+    "price": 5.5,
+    "description": "Bière blonde, légère et rafraîchissante, avec des notes de citron et de fleurs.",
+    "quantity": 30
+  },
+  {
+    "id": 8,
+    "name": "Merlot",
+    "category": 2,
+    "price": 14.8,
+    "description": "Vin rouge fruité et équilibré, issu d'un cépage 100% Merlot.",
+    "quantity": 6
+  },
+  {
+    "id": 9,
+    "name": "Gin",
+    "category": 3,
+    "price": 12.9,
+    "description": "Spiritueux classique, à base de genièvre et de tonic, pour un apéritif rafraîchissant.",
+    "quantity": 18
+  },
+  {
+    "id": 10,
+    "name": "Ginger Ale",
+    "category": 4,
+    "price": 2.9,
+    "description": "Boisson gazeuse piquante et colorée, parfaite pour les enfants et les adultes qui restent jeunes.",
+    "quantity": 48
+  },
+  {
+    "id": 11,
+    "name": "Chai Latte",
+    "category": 5,
+    "price": 8.5,
+    "description": "Boisson chaude et épicée, à base de thé noir et de lait, pour un moment de détente.",
+    "quantity": 15
+  },
+  {
+    "id": 12,
+    "name": "Lager",
+    "category": 1,
+    "price": 4.8,
+    "description": "Bière blonde, claire et rafraîchissante, avec des notes de céréales et de fleurs.",
+    "quantity": 20
+  },
+  {
+    "id": 13,
+    "name": "Rosé",
+    "category": 2,
+    "price": 10.9,
+    "description": "Vin rosé fruité et léger, parfait pour les soirées d'été.",
+    "quantity": 8
+  },
+  {
+    "id": 14,
+    "name": "Vodka",
+    "category": 3,
+    "price": 15.9,
+    "description": "Spiritueux neutre et puissant, à base de céréales et d'eau de source.",
+    "quantity": 10
+  },
+  {
+    "id": 15,
+    "name": "Jus d'Orange",
+    "category": 4,
+    "price": 3.2,
+    "description": "Jus de fruit frais et naturel, parfait pour un petit déjeuner sain.",
+    "quantity": 0
+  }
+]
