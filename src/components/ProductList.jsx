@@ -7,7 +7,7 @@ import HotDrinkImage from '../assets/products/hot-drink.svg'
 
 import products from '../mockDatabase/products.json'
 import categories from '../mockDatabase/categories.json'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const ProductList = () => {
   const getProductImageSrc = (category) => {
@@ -49,11 +49,30 @@ const ProductList = () => {
     return categoryData ? categoryData.name : null
   }
 
+  const { category } = useParams()
+
+  const filteredProducts = products.filter((product) => {
+    switch (category) {
+      case 'bieres':
+        return product.category === 1
+      case 'vins':
+        return product.category === 2
+      case 'spiritueux':
+        return product.category === 3
+      case 'sans-alcool':
+        return product.category === 4
+      case 'boissons-chaudes':
+        return product.category === 5
+      default:
+        return true
+    }
+  })
+
   return (
     <div className='products'>
       <h1 className='products-title'>Nouveautés</h1>
       <div className='products-container'>
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Link to={`/product/${product.id}`} key={product.id}>
             <ProductCard
               key={product.id}
