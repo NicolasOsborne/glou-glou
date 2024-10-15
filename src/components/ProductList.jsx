@@ -1,3 +1,5 @@
+import { Link, useParams } from 'react-router-dom'
+
 import ProductCard from './ProductCard'
 import BeerImage from '../assets/products/beer.svg'
 import WineImage from '../assets/products/wine.svg'
@@ -7,7 +9,6 @@ import HotDrinkImage from '../assets/products/hot-drink.svg'
 
 import products from '../mockDatabase/products.json'
 import categories from '../mockDatabase/categories.json'
-import { Link, useParams } from 'react-router-dom'
 
 const ProductList = () => {
   const getProductImageSrc = (category) => {
@@ -81,6 +82,7 @@ const ProductList = () => {
               productName={product.name}
               productCategory={getProductCategory(product.category)}
               productPrice={product.price}
+              productId={product.id}
             />
           </Link>
         ))}

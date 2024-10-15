@@ -27,11 +27,13 @@ const ProductCard = ({
       <div className='product-card_price'>
         <div className='product-card_price_container'>
           <div className='inner-container'>
-            <h5 className='product-card_price_amount'>{productPrice} €</h5>
+            <h5 className='product-card_price_amount'>
+              {parseFloat(productPrice).toFixed(2)} €
+            </h5>
           </div>
         </div>
         <div className='product-card_price_button_container'>
-          <Button buttonText='Ajouter' />
+          <Button buttonText='Acheter' />
         </div>
       </div>
     </div>

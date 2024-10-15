@@ -4,6 +4,9 @@ import QuantitySelector from './QuantitySelector'
 
 import { FaRegTrashAlt } from 'react-icons/fa'
 
+import { useContext } from 'react'
+import { CartContext } from '../features/CartContext'
+
 const CartItem = ({
   cartItemImageSrc,
   cartItemImageAlt,
@@ -11,7 +14,18 @@ const CartItem = ({
   cartItemPrice,
   cartItemQuantity,
   cartItemTotal,
+  cartItemId,
 }) => {
+  const { updateItemQuantity, removeItemFromCart } = useContext(CartContext)
+
+  const handleUpdateQuantity = (newQuantity) => {
+    updateItemQuantity(cartItemId, newQuantity)
+  }
+
+  const handleRemoveItem = () => {
+    removeItemFromCart(cartItemId)
+  }
+
   return (
     <div className='cart-item-card'>
       <div className='cart-item'>
@@ -25,16 +39,25 @@ const CartItem = ({
         </div>
         <div className='cart-item_details'>
           <h3 className='cart-item_details_name'>{cartItemName}</h3>
-          <h4 className='cart-item_details_price'>{cartItemPrice} €</h4>
+          <h4 className='cart-item_details_price'>
+            {cartItemPrice.toFixed(2)} €
+          </h4>
         </div>
       </div>
       <div className='cart-item_amount'>
         <QuantitySelector
           className='cart-item_amount_quantity'
+          value={cartItemQuantity}
+          onChange={handleUpdateQuantity}
           productQuantity={cartItemQuantity}
         />
-        <div className='cart-item_amount_total'>{cartItemTotal} €</div>
-        <FaRegTrashAlt className='cart-item_amount_delete' />
+        <div className='cart-item_amount_total'>
+          {cartItemTotal.toFixed(2)} €
+        </div>
+        <FaRegTrashAlt
+          onClick={handleRemoveItem}
+          className='cart-item_amount_delete'
+        />
       </div>
     </div>
   )
@@ -47,6 +70,7 @@ CartItem.propTypes = {
   cartItemPrice: PropTypes.number.isRequired,
   cartItemQuantity: PropTypes.number.isRequired,
   cartItemTotal: PropTypes.number.isRequired,
+  cartItemId: PropTypes.number.isRequired,
 }
 
 export default CartItem

@@ -12,6 +12,9 @@ import HotDrinkImage from '../assets/products/hot-drink.svg'
 
 import products from '../mockDatabase/products.json'
 
+import { useContext, useState } from 'react'
+import { CartContext } from '../features/CartContext'
+
 const ProductPage = () => {
   const navigate = useNavigate()
 
@@ -73,6 +76,23 @@ const ProductPage = () => {
     }
   }
 
+  const { addItemToCart } = useContext(CartContext)
+  const [quantity, setQuantity] = useState(1)
+
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity)
+  }
+
+  const handleAddToCart = () => {
+    addItemToCart({
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      price: product.price.toFixed(2),
+      quantity: quantity,
+    })
+  }
+
   return (
     <section className='product-page'>
       <div className='product-page_content-container'>
@@ -92,7 +112,9 @@ const ProductPage = () => {
               {getProductCategory(product.category)}
             </h3>
             <p className='product-details_description'>{product.description}</p>
-            <p className='product-details_price'>{product.price} €</p>
+            <p className='product-details_price'>
+              {product.price.toFixed(2)} €
+            </p>
             <p
               className={`product-details_status ${
                 product.quantity > 0 ? 'in-stock' : 'out-of-stock'
@@ -101,9 +123,13 @@ const ProductPage = () => {
               {product.quantity > 0 ? 'En stock' : 'Rupture de stock'}
             </p>
             <div className='product-details_add-to-cart-container'>
-              <QuantitySelector />
+              <QuantitySelector
+                value={quantity}
+                onChange={handleQuantityChange}
+              />
               <Button
                 buttonText='Ajouter au panier'
+                onClick={handleAddToCart}
                 className='product-details_add-to-cart_button'
               />
             </div>

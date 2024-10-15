@@ -1,17 +1,19 @@
-import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 
-const QuantitySelector = () => {
-  const [productQuantity, setProductQuantity] = useState(1)
+const QuantitySelector = ({ value, onChange }) => {
+  const [productQuantity, setProductQuantity] = useState(value)
 
   const handleDecrement = () => {
     if (productQuantity > 1) {
       setProductQuantity(productQuantity - 1)
+      onChange(productQuantity - 1)
     }
   }
 
   const handleIncrement = () => {
     setProductQuantity(productQuantity + 1)
+    onChange(productQuantity + 1)
   }
 
   return (
@@ -28,7 +30,8 @@ const QuantitySelector = () => {
 }
 
 QuantitySelector.propTypes = {
-  productQuantity: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default QuantitySelector
