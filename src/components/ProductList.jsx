@@ -71,7 +71,7 @@ const ProductList = () => {
 
   return (
     <div className='products'>
-      <h1 className='products-title'>Nouveautés</h1>
+      <h1 className='products-title'>{category}</h1>
       <div className='products-container'>
         {filteredProducts.map((product) => (
           <Link to={`/product/${product.id}`} key={product.id}>
