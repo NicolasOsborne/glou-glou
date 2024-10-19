@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { CartProvider } from './features/CartContext'
+import { LoginProvider } from './features/LoginContext'
 
 import Home from './pages/Home'
 import Header from './components/Header'
@@ -10,7 +11,6 @@ import Cart from './pages/Cart'
 import Confirmation from './pages/Confirmation'
 import Login from './pages/Login'
 import Error from './pages/Error'
-import { LoginProvider } from './features/LoginContext'
 
 function App() {
   return (
