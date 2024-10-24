@@ -2,6 +2,36 @@
   {
     "id": 1,
     "email": "admin@admin.com",
-    "password": "admin"
+    "password": "admin",
+    "role": "admin",
+    "orders": 0
+  },
+  {
+    "id": 2,
+    "email": "borice@glou.com",
+    "password": "borice",
+    "role": "customer",
+    "orders": 2
+  },
+  {
+    "id": 3,
+    "email": "jocelyn@glou.com",
+    "password": "jocelyn",
+    "role": "customer",
+    "orders": 1
+  },
+  {
+    "id": 4,
+    "email": "cedric@glou.com",
+    "password": "cedric",
+    "role": "customer",
+    "orders": 3
+  },
+  {
+    "id": 5,
+    "email": "nicolas@glou.com",
+    "password": "nicolas",
+    "role": "customer",
+    "orders": 12
   }
 ]

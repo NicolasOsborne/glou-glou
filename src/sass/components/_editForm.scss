@@ -1,4 +1,4 @@
-.product-edit-form {
+.edit-form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -6,38 +6,39 @@
   padding: 40px 32px;
   width: 100%;
 
-  input,
-  textarea,
+  .edit-form_entry {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
   select {
     padding: 10px;
     border: 2px solid $color-primary;
     font-family: $font-montserrat;
+    font-size: 24px;
+    font-weight: 700;
 
     &:focus {
       border: 2px solid $color-secondary;
     }
   }
 
-  &_name {
-    font-size: 30px;
+  input {
+    padding: 10px;
+    border: 2px solid $color-black;
+    font-family: $font-montserrat;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  &_input_number {
+    width: 30%;
+  }
+
+  label {
+    font-size: 24px;
     font-weight: 700;
-  }
-
-  &_category {
-    font-size: 22px;
-    font-weight: 600;
-  }
-
-  &_description {
-    font-size: 16px;
-    line-height: 30px;
-  }
-
-  &_price,
-  &_quantity {
-    font-size: 36px;
-    font-weight: 700;
-    width: 50%;
   }
 
   &_button {

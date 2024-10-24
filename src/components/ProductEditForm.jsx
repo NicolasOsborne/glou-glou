@@ -38,12 +38,17 @@ const ProductEditForm = ({
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <input
+      <select
         className='product-edit-form_category'
-        type='text'
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-      />
+      >
+        <option value='Bières'>Bières</option>
+        <option value='Vins'>Vins</option>
+        <option value='Spiritueux'>Spiritueux</option>
+        <option value='Sans Alcool'>Sans Alcool</option>
+        <option value='Boissons Chaudes'>Boissons Chaudes</option>
+      </select>
       <textarea
         className='product-edit-form_description'
         value={description}

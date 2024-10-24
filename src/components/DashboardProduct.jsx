@@ -17,7 +17,7 @@ const DashboardProduct = ({
         <h3 className='dashboard-item_details_id'>{productId}</h3>
         <p className='dashboard-item_details_info'>{productName}</p>
         <p className='dashboard-item_details_info'>{productCategory}</p>
-        <p className='dashboard-item_details_info'>{productPrice}</p>
+        <p className='dashboard-item_details_info'>{productPrice} €</p>
         <p className='dashboard-item_details_info'>{productStock}</p>
       </div>
       <div className='dashboard-item_actions'>

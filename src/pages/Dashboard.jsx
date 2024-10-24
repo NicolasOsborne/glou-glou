@@ -4,19 +4,27 @@ import { Link, useLocation } from 'react-router-dom'
 import { FaChevronRight } from 'react-icons/fa6'
 
 import products from '../mockDatabase/products.json'
+import orders from '../mockDatabase/orders.json'
+import users from '../mockDatabase/users.json'
 
 import DashboardProduct from '../components/DashboardProduct'
 import DashboardHeader from '../components/DashboardHeader'
 import Modal from '../components/Modal'
-import ProductEditForm from '../components/ProductEditForm'
 import Button from '../components/Button'
+import ProductEditForm from '../components/ProductEditForm'
+import DashboardOrder from '../components/DashboardOrder'
+import DashboardUser from '../components/DashboardUser'
+import OrderEditForm from '../components/OrderEditForm'
+import UserEditForm from '../components/UserEditForm'
 
 const Dashboard = () => {
+  // State management
   const [currentView, setCurrentView] = useState('products')
   const [title, setTitle] = useState('Produits')
   const [data, setData] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [selectedItem, setSelectedItem] = useState(null)
+  const [formType, setFormType] = useState('')
 
   const location = useLocation()
 
@@ -26,11 +34,11 @@ const Dashboard = () => {
     if (path === 'orders') {
       setCurrentView('orders')
       setTitle('Commandes')
-      //  fetchOrders()
+      fetchOrders()
     } else if (path === 'users') {
       setCurrentView('users')
       setTitle('Utilisateurs')
-      //  fetchUsers()
+      fetchUsers()
     } else {
       setCurrentView('products')
       setTitle('Produits')
@@ -38,26 +46,23 @@ const Dashboard = () => {
     }
   }, [location])
 
-  // const fetchProducts = async () => {
-  //   const response = await fetch('/api/products')
-  //   const products = await response.json()
-  //   setData(products)
-  // }
   const fetchProducts = async () => {
+    //   const response = await fetch('/api/products')
+    //   const products = await response.json()
     setData(products)
   }
 
-  // const fetchOrders = async () => {
-  //   const response = await fetch('/api/orders')
-  //   const orders = await response.json()
-  //   setData(orders)
-  // }
+  const fetchOrders = async () => {
+    //   const response = await fetch('/api/orders')
+    //   const orders = await response.json()
+    setData(orders)
+  }
 
-  // const fetchUsers = async () => {
-  //   const response = await fetch('/api/users')
-  //   const users = await response.json()
-  //   setData(users)
-  // }
+  const fetchUsers = async () => {
+    //   const response = await fetch('/api/users')
+    //   const users = await response.json()
+    setData(users)
+  }
 
   const getProductCategory = (category) => {
     switch (category) {
@@ -76,32 +81,51 @@ const Dashboard = () => {
     }
   }
 
-  const handleEditProduct = (product) => {
-    setSelectedProduct(product)
-    setIsModalOpen(true)
-  }
-
+  // Products
   const handleDeleteProduct = (product) => {
     console.log(`${product.name} a bien été supprimé`)
   }
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedProduct(null)
-    fetchProducts()
-  }
-
-  const handleUpdateProduct = () => {
+  const handleUpdateProduct = (updatedProduct) => {
+    console.log('Updated Product:', updatedProduct)
     handleCloseModal()
-  }
-
-  const handleAddProduct = () => {
-    setSelectedProduct(null)
-    setIsModalOpen(true)
   }
 
   const handleSubmitNewProduct = () => {
     handleCloseModal()
+  }
+
+  // Orders
+  const handleUpdateOrder = (updatedOrder) => {
+    console.log('Updated Order:', updatedOrder)
+    handleCloseModal()
+  }
+
+  const handleDeleteOrder = (order) => {
+    console.log(`La commande ${order.id} a bien été annulée`)
+  }
+
+  // Users
+  const handleUpdateUser = (updatedUser) => {
+    console.log('Updated User:', updatedUser)
+    handleCloseModal()
+  }
+  const handleDeleteUser = (user) => {
+    console.log(`L'utilisateur ${user.email} a bien été annulée`)
+  }
+
+  // Modal
+  const handleOpenModal = (item, type) => {
+    setSelectedItem(item)
+    setFormType(type)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedItem(null)
+    setFormType('')
+    // fetchProducts()
   }
 
   return (
@@ -150,7 +174,7 @@ const Dashboard = () => {
           {currentView === 'products' && (
             <Button
               buttonText='+ Ajouter un produit'
-              onClick={handleAddProduct}
+              onClick={() => handleOpenModal(null, 'product')}
               className='add-product-button'
             />
           )}
@@ -165,34 +189,74 @@ const Dashboard = () => {
                   productCategory={getProductCategory(product.category)}
                   productPrice={product.price}
                   productStock={product.stock}
-                  onEditClick={() => handleEditProduct(product)}
+                  onEditClick={() => handleOpenModal(product, 'product')}
                   onDeleteClick={() => handleDeleteProduct(product)}
+                />
+              ))}
+            {currentView === 'orders' &&
+              data.map((order) => (
+                <DashboardOrder
+                  key={order.id}
+                  orderId={order.id}
+                  orderCustomer={order.customer_id}
+                  orderStatus={order.status}
+                  orderAmount={order.amount}
+                  orderQuantity={order.quantity}
+                  onEditClick={() => handleOpenModal(order, 'order')}
+                  onDeleteClick={() => handleDeleteOrder(order)}
+                />
+              ))}
+            {currentView === 'users' &&
+              data.map((user) => (
+                <DashboardUser
+                  key={user.id}
+                  userId={user.id}
+                  userEmail={user.email}
+                  userRole={user.role}
+                  userOrders={user.orders}
+                  onEditClick={() => handleOpenModal(user, 'user')}
+                  onDeleteClick={() => handleDeleteUser(user)}
                 />
               ))}
           </div>
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <ProductEditForm
-          productName={
-            selectedProduct ? selectedProduct.name : 'Nom du produit'
-          }
-          productCategory={
-            selectedProduct
-              ? getProductCategory(selectedProduct.category)
-              : 'Catégorie du produit'
-          }
-          productDescription={
-            selectedProduct
-              ? selectedProduct.description
-              : 'Description du produit'
-          }
-          productPrice={selectedProduct ? selectedProduct.price : 0.0}
-          productStock={selectedProduct ? selectedProduct.stock : 0}
-          onFormSubmit={
-            selectedProduct ? handleUpdateProduct : handleSubmitNewProduct
-          }
-        />
+        {formType === 'product' && (
+          <ProductEditForm
+            productName={selectedItem ? selectedItem.name : 'Nom du produit'}
+            productCategory={
+              selectedItem
+                ? getProductCategory(selectedItem.category)
+                : 'Catégorie du produit'
+            }
+            productDescription={
+              selectedItem ? selectedItem.description : 'Description du produit'
+            }
+            productPrice={selectedItem ? selectedItem.price : 0.0}
+            productStock={selectedItem ? selectedItem.stock : 0}
+            onFormSubmit={
+              selectedItem ? handleUpdateProduct : handleSubmitNewProduct
+            }
+          />
+        )}
+        {formType === 'order' && selectedItem && (
+          <OrderEditForm
+            orderStatus={selectedItem.status}
+            orderAmount={selectedItem.amount}
+            orderQuantity={selectedItem.quantity}
+            orderCustomer={selectedItem.customer_id}
+            onFormSubmit={handleUpdateOrder}
+          />
+        )}
+        {formType === 'user' && selectedItem && (
+          <UserEditForm
+            userEmail={selectedItem.email}
+            userRole={selectedItem.role}
+            userOrders={selectedItem.orders}
+            onFormSubmit={handleUpdateUser}
+          />
+        )}
       </Modal>
     </section>
   )

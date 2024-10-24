@@ -17,8 +17,8 @@ const DashboardHeader = ({ currentView }) => {
         return (
           <div className='dashboard-header-entries'>
             <p className='dashboard-header_id'>ID</p>
-            <p className='dashboard-header_entry'>Nom</p>
             <p className='dashboard-header_entry'>E-mail</p>
+            <p className='dashboard-header_entry'>Rôle</p>
             <p className='dashboard-header_entry'>Commandes</p>
           </div>
         )
@@ -26,10 +26,10 @@ const DashboardHeader = ({ currentView }) => {
         return (
           <div className='dashboard-header-entries'>
             <p className='dashboard-header_id'>ID</p>
-            <p className='dashboard-header_entry'>Client</p>
             <p className='dashboard-header_entry'>Statut</p>
             <p className='dashboard-header_entry'>Montant</p>
             <p className='dashboard-header_entry'>Articles</p>
+            <p className='dashboard-header_entry'>Client</p>
           </div>
         )
     }
