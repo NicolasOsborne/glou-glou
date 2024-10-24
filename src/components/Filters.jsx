@@ -28,10 +28,6 @@ const Filters = () => {
             <FaChevronRight className='filters-category_chevron' />
             <p className='filters-category_name'>Boissons Chaudes</p>
           </Link>
-          <Link to='/category/nouveautes' className='filters-category'>
-            <FaChevronRight className='filters-category_chevron' />
-            <p className='filters-category_name'>Nouveautés</p>
-          </Link>
         </div>
       </div>
     </aside>

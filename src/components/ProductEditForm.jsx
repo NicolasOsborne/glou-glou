@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { PropTypes } from 'prop-types'
 
-import QuantitySelector from './QuantitySelector'
 import Button from './Button'
 
 const ProductEditForm = ({
@@ -11,6 +10,7 @@ const ProductEditForm = ({
   productDescription,
   productPrice,
   productStock,
+  onFormSubmit,
 }) => {
   const [name, setName] = useState(productName)
   const [category, setCategory] = useState(productCategory)
@@ -27,6 +27,7 @@ const ProductEditForm = ({
     console.log('Description:', description)
     console.log('Price:', price)
     console.log('Stock Quantity:', stockQuantity)
+    onFormSubmit({ name, category, description, price, stockQuantity })
   }
 
   return (
@@ -54,8 +55,9 @@ const ProductEditForm = ({
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
-      <QuantitySelector
+      <input
         className='product-edit-form_quantity'
+        type='number'
         value={stockQuantity}
         onChange={(e) => setStockQuantity(e.target.value)}
       />
@@ -74,6 +76,7 @@ ProductEditForm.propTypes = {
   productDescription: PropTypes.string.isRequired,
   productPrice: PropTypes.number.isRequired,
   productStock: PropTypes.number.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
 }
 
 export default ProductEditForm

@@ -1,6 +1,6 @@
 .login-page {
   width: 100%;
-  height: calc(100vh - 340px);
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,6 +61,13 @@
         font-weight: 700;
         align-self: center;
       }
+    }
+
+    .navigate_button {
+      background-color: $color-secondary;
+      height: 45px;
+      font-size: 16px;
+      font-weight: 700;
     }
   }
 
