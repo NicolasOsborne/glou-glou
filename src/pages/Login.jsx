@@ -3,6 +3,7 @@ import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 
 import users from '../mockDatabase/users.json'
+
 import { LoginContext } from '../features/LoginContext'
 
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
 
-  const { setIsLoggedIn } = useContext(LoginContext)
+  const { setIsLoggedIn, setUserRole } = useContext(LoginContext)
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -20,6 +21,7 @@ const Login = () => {
     )
     if (user) {
       setIsLoggedIn(true)
+      setUserRole(user.role)
       navigate('/')
     }
   }

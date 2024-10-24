@@ -12,13 +12,15 @@ import { CartContext } from '../features/CartContext'
 import { LoginContext } from '../features/LoginContext'
 
 const Header = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext)
+  const { isLoggedIn, setIsLoggedIn, userRole, setUserRole } =
+    useContext(LoginContext)
+
+  const { cart } = useContext(CartContext)
 
   const handleLogout = () => {
     setIsLoggedIn(false)
+    setUserRole(null)
   }
-
-  const { cart } = useContext(CartContext)
 
   const calculateTotalQuantity = () => {
     if (Array.isArray(cart)) {
@@ -49,14 +51,33 @@ const Header = () => {
         </Link>
         <nav className='header-nav'>
           {isLoggedIn ? (
-            <NavLink
-              to='/'
-              className='header-nav_logout'
-              onClick={handleLogout}
-            >
-              <FaRegUser />
-              Déconnexion
-            </NavLink>
+            <>
+              {userRole === 'admin' ? (
+                <>
+                  <NavLink to='/dashboard' className='header-nav_logout'>
+                    <FaRegUser />
+                    Dashboard
+                  </NavLink>
+                  <NavLink
+                    to='/'
+                    className='header-nav_logout'
+                    onClick={handleLogout}
+                  >
+                    <FaRegUser />
+                    Déconnexion
+                  </NavLink>
+                </>
+              ) : (
+                <NavLink
+                  to='/'
+                  className='header-nav_logout'
+                  onClick={handleLogout}
+                >
+                  <FaRegUser />
+                  Déconnexion
+                </NavLink>
+              )}
+            </>
           ) : (
             <NavLink to='/login' className='header-nav_login'>
               <FaRegUser />
