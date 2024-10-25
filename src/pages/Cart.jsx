@@ -3,68 +3,31 @@ import { useNavigate } from 'react-router-dom'
 import CartItem from '../components/CartItem'
 import Button from '../components/Button'
 
-import BeerImage from '../assets/products/beer.svg'
-import WineImage from '../assets/products/wine.svg'
-import AlcoholImage from '../assets/products/alcohol.svg'
-import SoftDrinkImage from '../assets/products/soft-drink.svg'
-import HotDrinkImage from '../assets/products/hot-drink.svg'
+import { getProductImageSrc, getProductImageAlt } from '../utils/productUtils'
 
 import { useContext } from 'react'
 import { CartContext } from '../features/CartContext'
 
 const Cart = () => {
-  const getProductImageSrc = (category) => {
-    switch (category) {
-      case 1:
-        return BeerImage
-      case 2:
-        return WineImage
-      case 3:
-        return AlcoholImage
-      case 4:
-        return SoftDrinkImage
-      case 5:
-        return HotDrinkImage
-      default:
-        return null
-    }
-  }
-
-  const getProductImageAlt = (category) => {
-    switch (category) {
-      case 1:
-        return 'Bière'
-      case 2:
-        return 'Vin'
-      case 3:
-        return 'Spiritueux'
-      case 4:
-        return 'Sans Alcool'
-      case 5:
-        return 'Boisson Chaude'
-      default:
-        return null
-    }
-  }
-
   // Hook permettant de gérer la redirection vers la page de confirmation de la commande
   const navigate = useNavigate()
 
-  // Gestion du click sur le bouton de validation de la commande
-  const handleCartValidation = () => {
-    setCart([])
-    navigate('/confirmation')
-  }
-
-  const { cart, setCart } = useContext(CartContext)
+  const { cart, loading, handleValidateOrder } = useContext(CartContext)
 
   const calculateSubtotal = () => {
     if (Array.isArray(cart)) {
       return cart
-        .reduce((acc, item) => acc + item.price * item.quantity, 0)
+        .reduce((acc, item) => {
+          const price = parseFloat(item.produit.prix)
+          const quantity = parseInt(item.quantity, 10)
+          if (!isNaN(price) && !isNaN(quantity)) {
+            return acc + price * quantity
+          }
+          return acc
+        }, 0)
         .toFixed(2)
     } else {
-      return 0
+      return '0.00'
     }
   }
 
@@ -76,6 +39,16 @@ const Cart = () => {
     }
   }
 
+  // Gestion du click sur le bouton de validation de la commande
+  const handleOrderValidation = () => {
+    handleValidateOrder()
+    navigate('/confirmation')
+  }
+
+  if (loading) {
+    return <p>Chargement du panier...</p>
+  }
+
   return (
     <section className='cart-page'>
       <div className='cart-items'>
@@ -85,12 +58,12 @@ const Cart = () => {
             <CartItem
               key={item.id}
               cartItemId={item.id}
-              cartItemImageSrc={getProductImageSrc(item.category)}
-              cartItemImageAlt={getProductImageAlt(item.category)}
-              cartItemName={item.name}
-              cartItemPrice={parseFloat(item.price)}
+              cartItemImageSrc={getProductImageSrc(item.produit.categorie.id)}
+              cartItemImageAlt={getProductImageAlt(item.produit.categorie.id)}
+              cartItemName={item.produit.nom}
+              cartItemPrice={parseFloat(item.produit.prix)}
               cartItemQuantity={item.quantity}
-              cartItemTotal={item.price * item.quantity}
+              cartItemTotal={item.produit.prix * item.quantity}
             />
           ))}
         </div>
@@ -123,7 +96,7 @@ const Cart = () => {
             </div>
             <Button
               buttonText='Valider la commande'
-              onClick={handleCartValidation}
+              onClick={handleOrderValidation}
               className='cart-total_button'
             />
           </div>

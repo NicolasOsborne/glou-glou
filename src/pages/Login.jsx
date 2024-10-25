@@ -24,7 +24,6 @@ const Login = () => {
       setIsLoggedIn(true)
       setUserRole(response.data.role)
       navigate('/')
-      console.log(response)
     } catch (err) {
       setError(err.response.data.error || 'Erreur de connexion')
     }

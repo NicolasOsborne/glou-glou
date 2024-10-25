@@ -21,6 +21,7 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [quantity, setQuantity] = useState(1)
+  const { addItemToCart } = useContext(CartContext)
 
   // Rechercher le produit en fonction de l'id dans l'URL
   useEffect(() => {
@@ -46,9 +47,6 @@ const ProductPage = () => {
     fetchProductData()
   }, [id, navigate])
 
-  // Gestion de l'ajout de produits au panier
-  const { addItemToCart } = useContext(CartContext)
-
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity)
   }
@@ -57,9 +55,6 @@ const ProductPage = () => {
     if (product) {
       addItemToCart({
         id: product.id,
-        name: product.nom,
-        category: product.categorie.nameCategory,
-        price: product.prix.toFixed(2),
         quantity: quantity,
       })
     }

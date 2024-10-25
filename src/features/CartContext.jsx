@@ -1,40 +1,75 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState, useContext } from 'react'
 import { PropTypes } from 'prop-types'
+import { addToCart, fetchUserCart, validateOrder } from '../api/api'
+import { LoginContext } from './LoginContext'
 
 const CartContext = createContext()
 
 const CartProvider = ({ children }) => {
+  const { isLoggedIn } = useContext(LoginContext)
   const [cart, setCart] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const addItemToCart = (item) => {
-    const existingItem = cart.find((i) => i.id === item.id)
-    if (existingItem) {
-      setCart(
-        cart.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
-        )
-      )
-    } else {
-      setCart([...cart, item])
+  useEffect(() => {
+    const fetchCart = async () => {
+      if (!isLoggedIn) {
+        setCart([])
+        setLoading(false)
+        return
+      }
+      try {
+        const response = await fetchUserCart()
+        setCart(response.data.cartItems)
+      } catch (error) {
+        console.error('Error fetching cart:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchCart()
+  }, [isLoggedIn])
+
+  const addItemToCart = async (item) => {
+    try {
+      const response = await addToCart(item.id)
+      if (response.status === 201) {
+        // Optionally, you can refetch the cart or update the state directly
+        const updatedCart = await fetchUserCart()
+        setCart(updatedCart.data.cartItems)
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error)
     }
   }
 
-  const updateItemQuantity = (id, quantity) => {
-    setCart(cart.map((i) => (i.id === id ? { ...i, quantity } : i)))
-  }
+  // const updateItemQuantity = (id, quantity) => {
+  //   setCart(cart.map((i) => (i.id === id ? { ...i, quantity } : i)))
+  // }
 
-  const removeItemFromCart = (id) => {
-    setCart(cart.filter((i) => i.id !== id))
+  // const removeItemFromCart = (id) => {
+  //   setCart(cart.filter((i) => i.id !== id))
+  // }
+
+  const handleValidateOrder = async () => {
+    try {
+      const response = await validateOrder()
+      if (response.status === 200) {
+        setCart([])
+      }
+    } catch (error) {
+      console.error('Error validating order:', error)
+    }
   }
 
   return (
     <CartContext.Provider
       value={{
         cart,
-        setCart,
+        loading,
         addItemToCart,
-        updateItemQuantity,
-        removeItemFromCart,
+        // updateItemQuantity,
+        // removeItemFromCart,
+        handleValidateOrder,
       }}
     >
       {children}

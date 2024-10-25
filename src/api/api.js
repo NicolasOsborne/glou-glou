@@ -58,8 +58,19 @@ export const filterProducts = async (filters) => {
 }
 
 // Cart
+// Add product to cart
 export const addToCart = async (productId) => {
   return await api.post(`/cart/add/${productId}`)
+}
+
+// Fetch user's cart
+export const fetchUserCart = async () => {
+  return await api.get('/cart')
+}
+
+// Validate order
+export const validateOrder = async () => {
+  return await api.post('/cart/validate')
 }
 
 export default api
