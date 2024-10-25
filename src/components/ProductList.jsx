@@ -1,32 +1,47 @@
 import { Link, useParams } from 'react-router-dom'
 import ProductCard from './ProductCard'
 import useFilteredProducts from '../hooks/useFilteredProducts'
-import {
-  getProductImageSrc,
-  getProductImageAlt,
-  getProductCategory,
-} from '../utils/productUtils'
+import useProducts from '../hooks/useProducts'
+
+import { getProductImageSrc, getProductImageAlt } from '../utils/productUtils'
 
 const ProductList = () => {
-  const filteredProducts = useFilteredProducts()
   const { category } = useParams()
+  const { products: allProducts, loading, error } = useProducts()
+  const { products: filteredProducts } = useFilteredProducts()
+
+  const productsToDisplay = category ? filteredProducts : allProducts
+
+  if (loading) {
+    return <p>Chargement des produits...</p>
+  }
+
+  if (error) {
+    return <p>Erreur: {error}</p>
+  }
 
   return (
     <div className='products'>
-      <h1 className='products-title'>{category}</h1>
+      <h1 className='products-title'>
+        {category ? category : 'Tous les produits'}
+      </h1>
       <div className='products-container'>
-        {filteredProducts.map((product) => (
-          <Link to={`/product/${product.id}`} key={product.id}>
-            <ProductCard
-              productImageSrc={getProductImageSrc(product.category)}
-              productImageAlt={getProductImageAlt(product.category)}
-              productName={product.name}
-              productCategory={getProductCategory(product.category)}
-              productPrice={product.price}
-              productId={product.id}
-            />
-          </Link>
-        ))}
+        {productsToDisplay.length > 0 ? (
+          productsToDisplay.map((product) => (
+            <Link to={`/product/${product.id}`} key={product.id}>
+              <ProductCard
+                productImageSrc={getProductImageSrc(product.categorie.id)}
+                productImageAlt={getProductImageAlt(product.categorie.id)}
+                productName={product.nom}
+                productCategory={product.categorie.nameCategory}
+                productPrice={product.prix}
+                productId={product.id}
+              />
+            </Link>
+          ))
+        ) : (
+          <p>Pas de produits disponibles...</p>
+        )}
       </div>
     </div>
   )

@@ -29,6 +29,14 @@ export const loginUser = async (credentials) => {
   return await api.post('/login', credentials)
 }
 
+// Categories
+// Fetch all categories :
+export const fetchCategories = async () => {
+  return await api.get('/category')
+}
+
+// Products
+// Fetch all products :
 export const fetchProducts = async () => {
   return await api.get('/produits')
 }

@@ -53,7 +53,7 @@ const Header = () => {
         <nav className='header-nav'>
           {isLoggedIn ? (
             <>
-              {userRole === 'admin' ? (
+              {userRole === 'ROLE_ADMIN' ? (
                 <>
                   <NavLink to='/dashboard' className='header-nav_logout'>
                     <FaRegUser />

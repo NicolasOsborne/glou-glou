@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { fetchProducts } from '../api/api'
 
-const useFilteredProducts = () => {
-  const { category } = useParams()
+const useProducts = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -12,15 +10,7 @@ const useFilteredProducts = () => {
     const fetchProductsData = async () => {
       try {
         const response = await fetchProducts() // Call the API function
-        const data = response.data // Get the products from the response
-        // Filter products by category if a category is specified
-        const filteredProducts = category
-          ? data.filter(
-              (product) =>
-                product.categorie.nameCategory.toLowerCase() === category
-            )
-          : data
-        setProducts(filteredProducts)
+        setProducts(response.data) // Set the products from the response
       } catch (err) {
         setError(err.message)
       } finally {
@@ -29,9 +19,9 @@ const useFilteredProducts = () => {
     }
 
     fetchProductsData()
-  }, [category])
+  }, [])
 
   return { products, loading, error }
 }
 
-export default useFilteredProducts
+export default useProducts
