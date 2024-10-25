@@ -22,7 +22,7 @@ const SignIn = () => {
       const response = await registerUser({
         email: signInEmail,
         password: signInPassword,
-        nom: signInName,
+        nomUser: signInName,
       })
       setIsLoggedIn(true)
       setUserRole(response.data.role)
@@ -43,15 +43,15 @@ const SignIn = () => {
         <h1 className='login_title'>Création de compte</h1>
         {error && <p className='error'>{error}</p>}
         <form className='login_form' onSubmit={handleSignIn}>
-          <div className='login_form_name'>
+          <div className='login_form_username'>
             <label className='login_form_label' htmlFor='name'>
-              Nom :
+              Username :
             </label>
             <input
               className='login_form_input'
               id='name'
               name='name'
-              placeholder='Votre nom...'
+              placeholder="Votre nom d'utilisateur..."
               type='text'
               value={signInName}
               onChange={(e) => setSignInName(e.target.value)}

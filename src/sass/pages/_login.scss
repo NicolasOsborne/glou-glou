@@ -31,7 +31,8 @@
       gap: 45px;
 
       .login_form_email,
-      .login_form_password {
+      .login_form_password,
+      .login_form_username {
         display: flex;
         flex-direction: row;
         align-items: center;
