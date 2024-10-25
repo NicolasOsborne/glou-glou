@@ -3,17 +3,12 @@ import QuantitySelector from '../components/QuantitySelector'
 import Button from '../components/Button'
 
 import { useNavigate, useParams } from 'react-router-dom'
+import { useContext, useState, useEffect } from 'react'
 
-import BeerImage from '../assets/products/beer.svg'
-import WineImage from '../assets/products/wine.svg'
-import AlcoholImage from '../assets/products/alcohol.svg'
-import SoftDrinkImage from '../assets/products/soft-drink.svg'
-import HotDrinkImage from '../assets/products/hot-drink.svg'
+import { getProductImageSrc, getProductImageAlt } from '../utils/productUtils'
 
-import products from '../mockDatabase/products.json'
-
-import { useContext, useState } from 'react'
 import { CartContext } from '../features/CartContext'
+import { fetchProducts } from '../api/api'
 
 const ProductPage = () => {
   // Gestion de la redirection
@@ -21,80 +16,61 @@ const ProductPage = () => {
 
   // Récupérer l'id du produit dans l'URL
   const { id } = useParams()
-  const product = products.find((product) => product.id === parseInt(id))
 
-  if (!product) {
-    navigate('/error')
-  }
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [quantity, setQuantity] = useState(1)
 
-  // Définir les images en fonction de la catégorie du produit
-  const getProductImageSrc = (category) => {
-    switch (category) {
-      case 1:
-        return BeerImage
-      case 2:
-        return WineImage
-      case 3:
-        return AlcoholImage
-      case 4:
-        return SoftDrinkImage
-      case 5:
-        return HotDrinkImage
-      default:
-        return null
+  // Rechercher le produit en fonction de l'id dans l'URL
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await fetchProducts()
+        const products = response.data
+        const currentProduct = products.find(
+          (product) => product.id === parseInt(id)
+        )
+
+        if (!currentProduct) {
+          throw new Error('Produit non trouvé')
+        }
+        setProduct(currentProduct)
+      } catch (err) {
+        setError(err.message)
+        navigate('/error')
+      } finally {
+        setLoading(false)
+      }
     }
-  }
-
-  const getProductImageAlt = (category) => {
-    switch (category) {
-      case 1:
-        return 'Bière'
-      case 2:
-        return 'Vin'
-      case 3:
-        return 'Spiritueux'
-      case 4:
-        return 'Sans Alcool'
-      case 5:
-        return 'Boisson Chaude'
-      default:
-        return null
-    }
-  }
-
-  const getProductCategory = (category) => {
-    switch (category) {
-      case 1:
-        return 'Bières'
-      case 2:
-        return 'Vins'
-      case 3:
-        return 'Spiritueux'
-      case 4:
-        return 'Sans Alcool'
-      case 5:
-        return 'Boissons Chaudes'
-      default:
-        return null
-    }
-  }
+    fetchProductData()
+  }, [id, navigate])
 
   // Gestion de l'ajout de produits au panier
   const { addItemToCart } = useContext(CartContext)
-  const [quantity, setQuantity] = useState(1)
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity)
   }
 
   const handleAddToCart = () => {
-    addItemToCart({
-      id: product.id,
-      name: product.name,
-      category: product.category,
-      price: product.price.toFixed(2),
-      quantity: quantity,
-    })
+    if (product) {
+      addItemToCart({
+        id: product.id,
+        name: product.nom,
+        category: product.categorie.nameCategory,
+        price: product.prix.toFixed(2),
+        quantity: quantity,
+      })
+    }
+  }
+
+  if (loading) {
+    return <p>Chargement du produit...</p>
+  }
+
+  if (error) {
+    return <p>Erreur: {error}</p>
   }
 
   return (
@@ -104,30 +80,30 @@ const ProductPage = () => {
         <div className='product-container'>
           <div className='product_image'>
             <img
-              src={getProductImageSrc(product.category)}
-              alt={getProductImageAlt(product.category)}
+              src={getProductImageSrc(product.categorie.id)}
+              alt={getProductImageAlt(product.categorie.id)}
               height={150}
               width={150}
             />
           </div>
           <div className='product-details'>
             <>
-              <h2 className='product-details_name'>{product.name}</h2>
+              <h2 className='product-details_name'>{product.nom}</h2>
               <h3 className='product-details_category'>
-                {getProductCategory(product.category)}
+                {product.categorie.nameCategory}
               </h3>
               <p className='product-details_description'>
                 {product.description}
               </p>
               <p className='product-details_price'>
-                {product.price.toFixed(2)} €
+                {product.prix.toFixed(2)} €
               </p>
               <p
                 className={`product-details_status ${
-                  product.stock > 0 ? 'in-stock' : 'out-of-stock'
+                  product.quantite > 0 ? 'in-stock' : 'out-of-stock'
                 }`}
               >
-                {product.stock > 0 ? 'En stock' : 'Rupture de stock'}
+                {product.quantite > 0 ? 'En stock' : 'Rupture de stock'}
               </p>
               <div className='product-details_add-to-cart-container'>
                 <QuantitySelector
