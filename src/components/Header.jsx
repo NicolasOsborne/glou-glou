@@ -20,6 +20,7 @@ const Header = () => {
   const handleLogout = () => {
     setIsLoggedIn(false)
     setUserRole(null)
+    localStorage.removeItem('token')
   }
 
   const calculateTotalQuantity = () => {
@@ -69,7 +70,7 @@ const Header = () => {
                 </>
               ) : (
                 <NavLink
-                  to='/'
+                  to='/login'
                   className='header-nav_logout'
                   onClick={handleLogout}
                 >

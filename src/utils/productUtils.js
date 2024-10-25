@@ -3,6 +3,7 @@ import WineImage from '../assets/products/wine.svg'
 import AlcoholImage from '../assets/products/alcohol.svg'
 import SoftDrinkImage from '../assets/products/soft-drink.svg'
 import HotDrinkImage from '../assets/products/hot-drink.svg'
+
 import categories from '../mockDatabase/categories.json'
 
 export const getProductImageSrc = (category) => {

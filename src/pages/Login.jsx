@@ -1,28 +1,32 @@
 import { useContext, useState } from 'react'
-import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
-
-import users from '../mockDatabase/users.json'
-
 import { LoginContext } from '../features/LoginContext'
+import { loginUser } from '../api/api'
+
+import Button from '../components/Button'
 
 const Login = () => {
   const navigate = useNavigate()
+  const { setIsLoggedIn, setUserRole } = useContext(LoginContext)
 
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const { setIsLoggedIn, setUserRole } = useContext(LoginContext)
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    const user = users.find(
-      (u) => u.email === loginEmail && u.password === loginPassword
-    )
-    if (user) {
+    try {
+      const response = await loginUser({
+        email: loginEmail,
+        password: loginPassword,
+      })
+      localStorage.setItem('token', response.data.token)
       setIsLoggedIn(true)
-      setUserRole(user.role)
+      setUserRole(response.data.role)
       navigate('/')
+      console.log(response)
+    } catch (err) {
+      setError(err.response.data.error || 'Erreur de connexion')
     }
   }
 
@@ -35,6 +39,7 @@ const Login = () => {
     <section className='login-page'>
       <div className='login-card'>
         <h1 className='login_title'>Connexion</h1>
+        {error && <p className='error'>{error}</p>}
         <form className='login_form' onSubmit={handleLogin}>
           <div className='login_form_email'>
             <label className='login_form_label' htmlFor='email'>
@@ -48,6 +53,7 @@ const Login = () => {
               type='email'
               value={loginEmail}
               onChange={(e) => setLoginEmail(e.target.value)}
+              required
             />
           </div>
           <div className='login_form_password'>
@@ -62,6 +68,7 @@ const Login = () => {
               type='password'
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
+              required
             />
           </div>
           <Button
