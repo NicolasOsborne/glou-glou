@@ -4,8 +4,6 @@ import AlcoholImage from '../assets/products/alcohol.svg'
 import SoftDrinkImage from '../assets/products/soft-drink.svg'
 import HotDrinkImage from '../assets/products/hot-drink.svg'
 
-import categories from '../mockDatabase/categories.json'
-
 export const getProductImageSrc = (category) => {
   switch (category) {
     case 1:
@@ -38,9 +36,4 @@ export const getProductImageAlt = (category) => {
     default:
       return null
   }
-}
-
-export const getProductCategory = (category) => {
-  const categoryData = categories.find((c) => c.id === category)
-  return categoryData ? categoryData.name : null
 }

@@ -41,6 +41,23 @@ export const fetchProducts = async () => {
   return await api.get('/produits')
 }
 
+// Filter products :
+export const filterProducts = async (filters) => {
+  const { selectedCategory, minPrice, maxPrice, isNewProduct, searchProduct } =
+    filters
+
+  // Construct the query parameters
+  const params = new URLSearchParams()
+  if (selectedCategory) params.append('categorie', selectedCategory)
+  if (minPrice) params.append('prix_min', minPrice)
+  if (maxPrice) params.append('prix_max', maxPrice)
+  if (isNewProduct) params.append('nouveautes', true)
+  if (searchProduct) params.append('search', searchProduct)
+
+  return await api.get(`/produits/filter?${params.toString()}`)
+}
+
+// Cart
 export const addToCart = async (productId) => {
   return await api.post(`/cart/add/${productId}`)
 }
