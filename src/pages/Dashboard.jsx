@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { FaChevronRight } from 'react-icons/fa6'
 
-import { fetchProducts, fetchCategories } from '../api/api'
+import { fetchProducts, fetchCategories, createCategory } from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
 import DashboardProduct from '../components/DashboardProduct'
@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [currentView, setCurrentView] = useState('')
   const [title, setTitle] = useState('Dashboard')
   const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState(false)
+  const [categories, setCategories] = useState([])
   const [selectedItem, setSelectedItem] = useState(null)
   const [formType, setFormType] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -83,8 +83,8 @@ const Dashboard = () => {
   }
 
   // Products
-  const handleDeleteProduct = (product) => {
-    console.log(`${product.name} a bien été supprimé`)
+  const handlCreateProduct = () => {
+    handleCloseModal()
   }
 
   const handleUpdateProduct = (updatedProduct) => {
@@ -92,11 +92,21 @@ const Dashboard = () => {
     handleCloseModal()
   }
 
-  const handlCreateProduct = () => {
-    handleCloseModal()
+  const handleDeleteProduct = (product) => {
+    console.log(`${product.name} a bien été supprimé`)
   }
 
   // Categories
+  const handleCreateCategory = async (newCategory) => {
+    try {
+      const response = await createCategory(newCategory)
+      setCategories((prevCategories) => [...prevCategories, response.data])
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error creating a new category:', error)
+    }
+  }
+
   const handleUpdateCategory = (updatedCategory) => {
     console.log('Updated Order:', updatedCategory)
     handleCloseModal()
@@ -104,10 +114,6 @@ const Dashboard = () => {
 
   const handleDeleteCategory = (category) => {
     console.log(`La commande ${category.id} a bien été annulée`)
-  }
-
-  const handleCreateCategory = () => {
-    handleCloseModal()
   }
 
   return (

@@ -13,8 +13,11 @@ const CategoryCreateForm = ({ onFormSubmit }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault()
     try {
-      const newCategory = await createCategory({ name, description })
-      onFormSubmit(newCategory)
+      const newCategory = await createCategory({
+        nameCategory: name,
+        descriptionCategory: description,
+      })
+      onFormSubmit(newCategory.data)
     } catch (error) {
       console.error('Error creating new category:', error)
     }
