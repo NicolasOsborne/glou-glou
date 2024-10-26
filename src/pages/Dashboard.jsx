@@ -12,6 +12,9 @@ import DashboardCategory from '../components/DashboardCategory'
 import ProductEditForm from '../components/ProductEditForm'
 import CategoryEditForm from '../components/CategoryEditForm'
 
+import ProductCreateForm from '../components/ProductCreateForm'
+import CategoryCreateForm from '../components/CategoryCreateForm'
+
 import Modal from '../components/Modal'
 import Button from '../components/Button'
 
@@ -89,11 +92,11 @@ const Dashboard = () => {
     handleCloseModal()
   }
 
-  const handleSubmitNewProduct = () => {
+  const handlCreateProduct = () => {
     handleCloseModal()
   }
 
-  // Orders
+  // Categories
   const handleUpdateCategory = (updatedCategory) => {
     console.log('Updated Order:', updatedCategory)
     handleCloseModal()
@@ -101,6 +104,10 @@ const Dashboard = () => {
 
   const handleDeleteCategory = (category) => {
     console.log(`La commande ${category.id} a bien été annulée`)
+  }
+
+  const handleCreateCategory = () => {
+    handleCloseModal()
   }
 
   return (
@@ -121,14 +128,14 @@ const Dashboard = () => {
           {currentView === 'products' && (
             <Button
               buttonText='+ Ajouter un produit'
-              onClick={() => handleOpenModal(null, 'product')}
+              onClick={() => handleOpenModal(null, 'createProduct')}
               className='add-product-button'
             />
           )}
           {currentView === 'categories' && (
             <Button
               buttonText='+ Ajouter une catégorie'
-              onClick={() => handleOpenModal(null, 'category')}
+              onClick={() => handleOpenModal(null, 'createCategory')}
               className='add-product-button'
             />
           )}
@@ -168,22 +175,14 @@ const Dashboard = () => {
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        {formType === 'product' && (
+        {formType === 'product' && selectedItem && (
           <ProductEditForm
-            productName={selectedItem ? selectedItem.nom : 'Nom du produit'}
-            productCategory={
-              selectedItem
-                ? selectedItem.categorie.nameCategory
-                : 'Catégorie du produit'
-            }
-            productDescription={
-              selectedItem ? selectedItem.description : 'Description du produit'
-            }
-            productPrice={selectedItem ? selectedItem.prix : 0.0}
-            productStock={selectedItem ? selectedItem.quantite : 0}
-            onFormSubmit={
-              selectedItem ? handleUpdateProduct : handleSubmitNewProduct
-            }
+            productName={selectedItem.nom}
+            productCategory={selectedItem.categorie.nameCategory}
+            productDescription={selectedItem.description}
+            productPrice={selectedItem.prix}
+            productStock={selectedItem.quantite}
+            onFormSubmit={handleUpdateProduct}
           />
         )}
         {formType === 'category' && selectedItem && (
@@ -193,6 +192,12 @@ const Dashboard = () => {
             categoryDescription={selectedItem.descriptionCategory}
             onFormSubmit={handleUpdateCategory}
           />
+        )}
+        {formType === 'createProduct' && (
+          <ProductCreateForm onFormSubmit={handlCreateProduct} />
+        )}
+        {formType === 'createCategory' && (
+          <CategoryCreateForm onFormSubmit={handleCreateCategory} />
         )}
       </Modal>
     </section>

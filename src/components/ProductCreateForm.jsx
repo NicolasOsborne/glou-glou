@@ -4,21 +4,14 @@ import { PropTypes } from 'prop-types'
 
 import Button from './Button'
 
-import { fetchCategories } from '../api/api'
+import { fetchCategories, createProduct } from '../api/api'
 
-const ProductEditForm = ({
-  productName,
-  productCategory,
-  productDescription,
-  productPrice,
-  productStock,
-  onFormSubmit,
-}) => {
-  const [name, setName] = useState(productName)
-  const [category, setCategory] = useState(productCategory)
-  const [description, setDescription] = useState(productDescription)
-  const [price, setPrice] = useState(parseFloat(productPrice).toFixed(2))
-  const [stockQuantity, setStockQuantity] = useState(productStock)
+const ProductCreateForm = ({ onFormSubmit }) => {
+  const [name, setName] = useState('')
+  const [category, setCategory] = useState('')
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState(0.0)
+  const [stockQuantity, setStockQuantity] = useState(0)
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
@@ -33,14 +26,25 @@ const ProductEditForm = ({
     fetchCategoriesData()
   }, [])
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
-    // Update the product information in the database (not implemented yet)
-    onFormSubmit({ name, category, description, price, stockQuantity })
+    try {
+      const newProduct = await createProduct({
+        name,
+        category,
+        description,
+        price,
+        stockQuantity,
+      })
+      onFormSubmit(newProduct)
+    } catch (error) {
+      console.error('Error creating new product:', error)
+    }
   }
 
   return (
     <form className='product-edit-form' onSubmit={handleFormSubmit}>
+      <h3>Créer un nouveau produit</h3>
       <div className='product-edit-form_entry'>
         <label>Nom :</label>
         <input
@@ -48,7 +52,6 @@ const ProductEditForm = ({
           type='text'
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
         />
       </div>
       <div className='product-edit-form_entry'>
@@ -57,7 +60,6 @@ const ProductEditForm = ({
           className='product-edit-form_category'
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          required
         >
           {categories.map((cat) => (
             <option key={cat.id} value={cat.nameCategory}>
@@ -72,7 +74,6 @@ const ProductEditForm = ({
           className='product-edit-form_description'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
         />
       </div>
       <div className='product-edit-form_entry'>
@@ -82,7 +83,6 @@ const ProductEditForm = ({
           type='number'
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          required
         />
       </div>
       <div className='product-edit-form_entry'>
@@ -92,7 +92,6 @@ const ProductEditForm = ({
           type='number'
           value={stockQuantity}
           onChange={(e) => setStockQuantity(e.target.value)}
-          required
         />
       </div>
       <Button
@@ -104,13 +103,8 @@ const ProductEditForm = ({
   )
 }
 
-ProductEditForm.propTypes = {
-  productName: PropTypes.string.isRequired,
-  productCategory: PropTypes.string.isRequired,
-  productDescription: PropTypes.string.isRequired,
-  productPrice: PropTypes.number.isRequired,
-  productStock: PropTypes.number.isRequired,
+ProductCreateForm.propTypes = {
   onFormSubmit: PropTypes.func.isRequired,
 }
 
-export default ProductEditForm
+export default ProductCreateForm

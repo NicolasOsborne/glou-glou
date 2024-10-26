@@ -35,10 +35,30 @@ export const fetchCategories = async () => {
   return await api.get('/category')
 }
 
+// Create new category :
+export const createCategory = async (categoryData) => {
+  return await api.post('/category/create', categoryData)
+}
+
+// Update category :
+export const updateCategory = async (categoryData) => {
+  return await api.put(`/category/update/${categoryData.id}`, categoryData)
+}
+
 // Products
 // Fetch all products :
 export const fetchProducts = async () => {
   return await api.get('/produits')
+}
+
+// Create new product :
+export const createProduct = async (productData) => {
+  return await api.post('/produit/create', productData)
+}
+
+// Update product :
+export const updateProduct = async (productData) => {
+  return await api.put(`/produit/update/${productData.id}`, productData)
 }
 
 // Filter products :

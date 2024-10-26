@@ -6,6 +6,11 @@
   padding: 40px 32px;
   width: 100%;
 
+  h3 {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
   .edit-form_entry {
     display: flex;
     flex-direction: column;

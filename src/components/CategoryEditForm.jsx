@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types'
 
 import Button from './Button'
 
-const OrderEditForm = ({
+const CategoryEditForm = ({
   categoryId,
   categoryName,
   categoryDescription,
@@ -39,6 +39,7 @@ const OrderEditForm = ({
           className='edit-form_change'
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
       </div>
       <div className='edit-form_entry'>
@@ -47,6 +48,7 @@ const OrderEditForm = ({
           className='edit-form_change'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
       </div>
       <Button
@@ -58,11 +60,11 @@ const OrderEditForm = ({
   )
 }
 
-OrderEditForm.propTypes = {
+CategoryEditForm.propTypes = {
   categoryId: PropTypes.number.isRequired,
   categoryName: PropTypes.string.isRequired,
   categoryDescription: PropTypes.string.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
 }
 
-export default OrderEditForm
+export default CategoryEditForm
