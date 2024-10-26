@@ -9,8 +9,8 @@ const useProducts = () => {
   useEffect(() => {
     const fetchProductsData = async () => {
       try {
-        const response = await fetchProducts() // Call the API function
-        setProducts(response.data) // Set the products from the response
+        const response = await fetchProducts()
+        setProducts(response.data)
       } catch (err) {
         setError(err.message)
       } finally {

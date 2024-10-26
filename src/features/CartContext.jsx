@@ -33,7 +33,6 @@ const CartProvider = ({ children }) => {
     try {
       const response = await addToCart(item.id)
       if (response.status === 201) {
-        // Optionally, you can refetch the cart or update the state directly
         const updatedCart = await fetchUserCart()
         setCart(updatedCart.data.cartItems)
       }

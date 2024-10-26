@@ -24,12 +24,24 @@
     }
   }
 
-  input {
+  .edit-form_readonly {
     padding: 10px;
     border: 2px solid $color-black;
     font-family: $font-montserrat;
     font-size: 20px;
     font-weight: 500;
+  }
+
+  .edit-form_change {
+    padding: 10px;
+    border: 2px solid $color-primary;
+    font-family: $font-montserrat;
+    font-size: 20px;
+    font-weight: 500;
+
+    &:focus {
+      border: 2px solid $color-secondary;
+    }
   }
 
   &_input_number {

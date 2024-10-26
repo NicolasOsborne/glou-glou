@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { PropTypes } from 'prop-types'
 
 import Button from './Button'
+
+import { fetchCategories } from '../api/api'
 
 const ProductEditForm = ({
   productName,
@@ -17,6 +19,19 @@ const ProductEditForm = ({
   const [description, setDescription] = useState(productDescription)
   const [price, setPrice] = useState(parseFloat(productPrice).toFixed(2))
   const [stockQuantity, setStockQuantity] = useState(productStock)
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    const fetchCategoriesData = async () => {
+      try {
+        const response = await fetchCategories()
+        setCategories(response.data)
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    }
+    fetchCategoriesData()
+  }, [])
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
@@ -32,40 +47,55 @@ const ProductEditForm = ({
 
   return (
     <form className='product-edit-form' onSubmit={handleFormSubmit}>
-      <input
-        className='product-edit-form_name'
-        type='text'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <select
-        className='product-edit-form_category'
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-      >
-        <option value='Bières'>Bières</option>
-        <option value='Vins'>Vins</option>
-        <option value='Spiritueux'>Spiritueux</option>
-        <option value='Sans Alcool'>Sans Alcool</option>
-        <option value='Boissons Chaudes'>Boissons Chaudes</option>
-      </select>
-      <textarea
-        className='product-edit-form_description'
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <input
-        className='product-edit-form_price'
-        type='number'
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
-      <input
-        className='product-edit-form_quantity'
-        type='number'
-        value={stockQuantity}
-        onChange={(e) => setStockQuantity(e.target.value)}
-      />
+      <div className='product-edit-form_entry'>
+        <label>Nom :</label>
+        <input
+          className='product-edit-form_name'
+          type='text'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div className='product-edit-form_entry'>
+        <label>Catégorie :</label>
+        <select
+          className='product-edit-form_category'
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.nameCategory}>
+              {cat.nameCategory}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className='product-edit-form_entry'>
+        <label>Description :</label>
+        <textarea
+          className='product-edit-form_description'
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+      <div className='product-edit-form_entry'>
+        <label>Prix :</label>
+        <input
+          className='product-edit-form_price'
+          type='number'
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+      </div>
+      <div className='product-edit-form_entry'>
+        <label>Stock :</label>
+        <input
+          className='product-edit-form_quantity'
+          type='number'
+          value={stockQuantity}
+          onChange={(e) => setStockQuantity(e.target.value)}
+        />
+      </div>
       <Button
         className='product-edit-form_button'
         buttonText='Valider les modifications'

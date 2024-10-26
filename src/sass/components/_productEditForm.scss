@@ -6,15 +6,25 @@
   padding: 40px 32px;
   width: 100%;
 
-  input,
-  textarea,
-  select {
-    padding: 10px;
-    border: 2px solid $color-primary;
-    font-family: $font-montserrat;
+  &_entry {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    label {
+      font-size: 24px;
+      font-weight: 700;
+    }
 
-    &:focus {
-      border: 2px solid $color-secondary;
+    input,
+    textarea,
+    select {
+      padding: 10px;
+      border: 2px solid $color-primary;
+      font-family: $font-montserrat;
+
+      &:focus {
+        border: 2px solid $color-secondary;
+      }
     }
   }
 
@@ -29,7 +39,7 @@
   }
 
   &_description {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 30px;
   }
 
