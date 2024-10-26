@@ -15,12 +15,11 @@ const CategoryEditForm = ({
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
-    // Update the product information in the database (not implemented yet)
-    console.log('Category information updated:')
-    console.log('Id:', categoryId)
-    console.log('name:', categoryName)
-    console.log('description:', categoryDescription)
-    onFormSubmit({ categoryId, categoryName, categoryDescription })
+    onFormSubmit({
+      categoryId,
+      categoryName: name,
+      categoryDescription: description,
+    })
   }
 
   return (

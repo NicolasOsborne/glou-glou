@@ -3,7 +3,13 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { FaChevronRight } from 'react-icons/fa6'
 
-import { fetchProducts, fetchCategories, createCategory } from '../api/api'
+import {
+  fetchProducts,
+  fetchCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
 import DashboardProduct from '../components/DashboardProduct'
@@ -107,13 +113,38 @@ const Dashboard = () => {
     }
   }
 
-  const handleUpdateCategory = (updatedCategory) => {
-    console.log('Updated Order:', updatedCategory)
-    handleCloseModal()
+  const handleUpdateCategory = async (updatedCategory) => {
+    try {
+      const response = await updateCategory({
+        id: selectedItem.id,
+        nameCategory: updatedCategory.categoryName,
+        descriptionCategory: updatedCategory.categoryDescription,
+      })
+      setCategories((prevCategories) =>
+        prevCategories.map((category) =>
+          category.id === response.data.id ? response.data : category
+        )
+      )
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error updating category:', error)
+    }
   }
 
-  const handleDeleteCategory = (category) => {
-    console.log(`La commande ${category.id} a bien été annulée`)
+  const handleDeleteCategory = async (category) => {
+    const confirmCategoryDelete = window.confirm(
+      `Êtes-vous sûr de vouloir supprimer la catégorie "${category.nameCategory}" ?`
+    )
+    if (confirmCategoryDelete) {
+      try {
+        await deleteCategory(category)
+        setCategories((prevCategories) =>
+          prevCategories.filter((cat) => cat.id !== category.id)
+        )
+      } catch (error) {
+        console.error('Error deleting category:', error)
+      }
+    }
   }
 
   return (

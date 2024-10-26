@@ -45,6 +45,11 @@ export const updateCategory = async (categoryData) => {
   return await api.put(`/category/update/${categoryData.id}`, categoryData)
 }
 
+// Delete category :
+export const deleteCategory = async (categoryData) => {
+  return await api.delete(`/category/delete/${categoryData.id}`)
+}
+
 // Products
 // Fetch all products :
 export const fetchProducts = async () => {
