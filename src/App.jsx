@@ -1,13 +1,7 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { useContext } from 'react'
 import { CartProvider } from './features/CartContext'
-import { LoginContext, LoginProvider } from './features/LoginContext'
+import { LoginProvider } from './features/LoginContext'
 
 import Home from './pages/Home'
 import Header from './components/Header'
@@ -19,26 +13,71 @@ import Login from './pages/Login'
 import Error from './pages/Error'
 import SignIn from './pages/SignIn'
 import Dashboard from './pages/Dashboard'
+import ProtectedRoute from './features/ProtectedRoute'
 
 function AppRoutes() {
-  const { isLoggedIn } = useContext(LoginContext)
-
   return (
     <Routes>
       <Route
         path='/'
-        element={isLoggedIn ? <Home /> : <Navigate to='/login' />}
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
       />
       <Route path='/category/:category' element={<Home />} />
       <Route path='/product/:id' element={<ProductPage />} />
-      <Route path='/cart' element={<Cart />} />
-      <Route path='/confirmation' element={<Confirmation />} />
+      <Route
+        path='/cart'
+        element={
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/confirmation'
+        element={
+          <ProtectedRoute>
+            <Confirmation />
+          </ProtectedRoute>
+        }
+      />
       <Route path='/login' element={<Login />} />
       <Route path='/signin' element={<SignIn />} />
-      <Route path='/dashboard' element={<Dashboard />} />
-      <Route path='/dashboard/:category' element={<Dashboard />} />
-      <Route path='/dashboard/orders' element={<Dashboard />} />
-      <Route path='/dashboard/users' element={<Dashboard />} />
+      <Route
+        path='/dashboard'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/dashboard/:category'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/dashboard/orders'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/dashboard/users'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
       <Route path='*' element={<Error />} />
     </Routes>
   )
