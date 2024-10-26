@@ -5,10 +5,12 @@ import { FaChevronRight } from 'react-icons/fa6'
 
 import {
   fetchProducts,
+  createProduct,
   fetchCategories,
   createCategory,
   updateCategory,
   deleteCategory,
+  deleteProduct,
 } from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
@@ -89,8 +91,14 @@ const Dashboard = () => {
   }
 
   // Products
-  const handlCreateProduct = () => {
-    handleCloseModal()
+  const handleCreateProduct = async (newProduct) => {
+    try {
+      const response = await createProduct(newProduct)
+      setProducts((prevProducts) => [...prevProducts, response.data])
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error creating new product:', error)
+    }
   }
 
   const handleUpdateProduct = (updatedProduct) => {
@@ -98,8 +106,21 @@ const Dashboard = () => {
     handleCloseModal()
   }
 
-  const handleDeleteProduct = (product) => {
-    console.log(`${product.name} a bien été supprimé`)
+  const handleDeleteProduct = async (product) => {
+    const confirmDelete = window.confirm(
+      `Êtes-vous sûr de vouloir supprimer le produit "${product.nom}" ?`
+    )
+    if (confirmDelete) {
+      try {
+        await deleteProduct(product)
+        setProducts((prevProducts) =>
+          prevProducts.filter((p) => p.id !== product.id)
+        )
+        console.log(`${product.nom} a bien été supprimé`)
+      } catch (error) {
+        console.error('Error deleting product:', error)
+      }
+    }
   }
 
   // Categories
@@ -231,7 +252,7 @@ const Dashboard = () => {
           />
         )}
         {formType === 'createProduct' && (
-          <ProductCreateForm onFormSubmit={handlCreateProduct} />
+          <ProductCreateForm onFormSubmit={handleCreateProduct} />
         )}
         {formType === 'createCategory' && (
           <CategoryCreateForm onFormSubmit={handleCreateCategory} />

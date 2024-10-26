@@ -66,6 +66,11 @@ export const updateProduct = async (productData) => {
   return await api.put(`/produit/update/${productData.id}`, productData)
 }
 
+// Delete product :
+export const deleteProduct = async (productData) => {
+  return await api.delete(`/produit/delete/${productData.id}`)
+}
+
 // Filter products :
 export const filterProducts = async (filters) => {
   const { selectedCategory, minPrice, maxPrice, isNewProduct, searchProduct } =

@@ -9,8 +9,8 @@ const useCategories = () => {
   useEffect(() => {
     const fetchCategoriesData = async () => {
       try {
-        const response = await fetchCategories() // Call the API function
-        setCategories(response.data) // Set the categories from the response
+        const response = await fetchCategories()
+        setCategories(response.data)
       } catch (err) {
         setError(err.message)
       } finally {

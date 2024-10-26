@@ -14,10 +14,20 @@ const LoginProvider = ({ children }) => {
     }
   }, [])
 
+  const login = (token) => {
+    localStorage.setItem('token', token)
+    setIsLoggedIn(true)
+    setUserRole('ROLE_ADMIN')
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    setUserRole(null)
+  }
+
   return (
-    <LoginContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, userRole, setUserRole }}
-    >
+    <LoginContext.Provider value={{ isLoggedIn, login, logout, userRole }}>
       {children}
     </LoginContext.Provider>
   )

@@ -7,7 +7,7 @@ import Button from '../components/Button'
 
 const Login = () => {
   const navigate = useNavigate()
-  const { setIsLoggedIn, setUserRole } = useContext(LoginContext)
+  const { login } = useContext(LoginContext)
 
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
@@ -20,9 +20,7 @@ const Login = () => {
         email: loginEmail,
         password: loginPassword,
       })
-      localStorage.setItem('token', response.data.token)
-      setIsLoggedIn(true)
-      setUserRole(response.data.role)
+      login(response.data.token, response.data.role)
       navigate('/')
     } catch (err) {
       setError(err.response.data.error || 'Erreur de connexion')

@@ -8,10 +8,11 @@ import { fetchCategories, createProduct } from '../api/api'
 
 const ProductCreateForm = ({ onFormSubmit }) => {
   const [name, setName] = useState('')
-  const [category, setCategory] = useState('')
+  const [categoryId, setCategoryId] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState(0.0)
   const [stockQuantity, setStockQuantity] = useState(0)
+  const [image, setImage] = useState(null)
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
@@ -28,19 +29,55 @@ const ProductCreateForm = ({ onFormSubmit }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
+    const formData = new FormData()
+    formData.append('nameProduit', name)
+    formData.append('categorie', categoryId)
+    formData.append('descriptionProduit', description)
+    formData.append('price', price)
+    formData.append('quantiteProduit', stockQuantity)
+    if (image) {
+      formData.append('imageProduit', image)
+    }
     try {
-      const newProduct = await createProduct({
-        name,
-        category,
-        description,
-        price,
-        stockQuantity,
-      })
-      onFormSubmit(newProduct)
+      const response = await createProduct(formData)
+      console.log('Form:', response.data)
+      onFormSubmit(response.data)
     } catch (error) {
       console.error('Error creating new product:', error)
     }
   }
+
+  //   const handleFormSubmit = async (e) => {
+  //     e.preventDefault()
+  //     const productData = {
+  //       nameProduit: name,
+  //       categorie: categoryId,
+  //       descriptionProduit: description,
+  //       price: price,
+  //       quantiteProduit: stockQuantity,
+  //     }
+  //     let imageBase64 = null
+  //     if (image) {
+  //       const reader = new FileReader()
+  //       reader.readAsDataURL(image)
+  //       reader.onloadend = async () => {
+  //         imageBase64 = reader.result
+  //         productData.imageProduit = imageBase64
+  //         await sendProductData(productData)
+  //       }
+  //     } else {
+  //       await sendProductData(productData)
+  //     }
+  //   }
+
+  //   const sendProductData = async (productData) => {
+  //     try {
+  //       const response = await createProduct(productData)
+  //       onFormSubmit(response.data)
+  //     } catch (error) {
+  //       console.error('Error creating new product:', error)
+  //     }
+  //   }
 
   return (
     <form className='product-edit-form' onSubmit={handleFormSubmit}>
@@ -52,17 +89,19 @@ const ProductCreateForm = ({ onFormSubmit }) => {
           type='text'
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
       </div>
       <div className='product-edit-form_entry'>
         <label>Catégorie :</label>
         <select
           className='product-edit-form_category'
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+          required
         >
           {categories.map((cat) => (
-            <option key={cat.id} value={cat.nameCategory}>
+            <option key={cat.id} value={cat.id}>
               {cat.nameCategory}
             </option>
           ))}
@@ -74,6 +113,7 @@ const ProductCreateForm = ({ onFormSubmit }) => {
           className='product-edit-form_description'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
       </div>
       <div className='product-edit-form_entry'>
@@ -83,6 +123,7 @@ const ProductCreateForm = ({ onFormSubmit }) => {
           type='number'
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          required
         />
       </div>
       <div className='product-edit-form_entry'>
@@ -92,11 +133,22 @@ const ProductCreateForm = ({ onFormSubmit }) => {
           type='number'
           value={stockQuantity}
           onChange={(e) => setStockQuantity(e.target.value)}
+          required
+        />
+      </div>
+      <div className='product-edit-form_entry'>
+        <label>Image :</label>
+        <input
+          className='product-edit-form_image'
+          type='file'
+          accept='image/*'
+          onChange={(e) => setImage(e.target.files[0])}
+          required
         />
       </div>
       <Button
         className='product-edit-form_button'
-        buttonText='Valider les modifications'
+        buttonText='Créer le produit'
         type='submit'
       />
     </form>

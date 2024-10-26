@@ -55,7 +55,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path='/dashboard/:category'
+        path='/dashboard/categories'
         element={
           <ProtectedRoute>
             <Dashboard />
@@ -63,15 +63,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path='/dashboard/orders'
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path='/dashboard/users'
+        path='/dashboard/products'
         element={
           <ProtectedRoute>
             <Dashboard />
