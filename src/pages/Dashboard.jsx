@@ -12,6 +12,7 @@ import {
   deleteCategory,
   deleteProduct,
   updateProduct,
+  fetchOrders,
 } from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
@@ -26,6 +27,7 @@ import CategoryCreateForm from '../components/CategoryCreateForm'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
+import DashboardOrder from '../components/DashboardOrder'
 
 const Dashboard = () => {
   // State management
@@ -33,6 +35,7 @@ const Dashboard = () => {
   const [title, setTitle] = useState('Dashboard')
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
+  const [orders, setOrders] = useState([])
   const [selectedItem, setSelectedItem] = useState(null)
   const [formType, setFormType] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -49,6 +52,10 @@ const Dashboard = () => {
       setCurrentView('products')
       setTitle('Produits')
       fetchProductsData()
+    } else if (path === 'orders') {
+      setCurrentView('orders')
+      setTitle('Commandes')
+      fetchOrdersData()
     } else {
       setCurrentView('')
       setTitle('Dashboard')
@@ -74,6 +81,16 @@ const Dashboard = () => {
       setCategories(response.data)
     } catch (error) {
       console.error('Error fetching categories:', error)
+    }
+  }
+
+  // Retrieve orders data from database with API call
+  const fetchOrdersData = async () => {
+    try {
+      const response = await fetchOrders()
+      setOrders(response.data)
+    } catch (error) {
+      console.error('Error fetching orders:', error)
     }
   }
 
@@ -197,6 +214,10 @@ const Dashboard = () => {
             <FaChevronRight className='dashboard-filters_link_chevron' />
             <p className='dashboard-filters_link_name'>Catégories</p>
           </Link>
+          <Link to='/dashboard/orders' className='dashboard-filters_link'>
+            <FaChevronRight className='dashboard-filters_link_chevron' />
+            <p className='dashboard-filters_link_name'>Commandes</p>
+          </Link>
         </aside>
         <div className='dashboard-content'>
           <h1 className='dashboard-content_title'>{title}</h1>
@@ -246,6 +267,17 @@ const Dashboard = () => {
                   return null
                 }
               })}
+            {currentView === 'orders' &&
+              orders.map((order) => (
+                <DashboardOrder
+                  key={order.id}
+                  orderId={order.id}
+                  orderCustomer={order.user}
+                  orderStatus={order.statut}
+                  onEditClick={() => handleOpenModal(order, 'order')}
+                  onDeleteClick={() => handleDeleteCategory(order)}
+                />
+              ))}
           </div>
         </div>
       </div>

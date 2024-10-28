@@ -70,6 +70,14 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path='/dashboard/orders'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
       <Route path='*' element={<Error />} />
     </Routes>
   )

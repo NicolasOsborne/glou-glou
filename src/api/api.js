@@ -93,6 +93,14 @@ export const filterByCategory = async (categoryId) => {
   return response.data
 }
 
+// By date :
+
+// By price :
+
+// By name :
+
+// Combined filters :
+
 // Cart
 // Add product to cart
 export const addToCart = async (productId) => {
@@ -107,6 +115,11 @@ export const fetchUserCart = async () => {
 // Validate order
 export const validateOrder = async () => {
   return await api.post('/cart/validate')
+}
+
+// Order history
+export const fetchOrders = async () => {
+  return await api.get('/history')
 }
 
 export default api
