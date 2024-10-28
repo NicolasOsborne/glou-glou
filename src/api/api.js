@@ -17,6 +17,21 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+const apiCreate = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+})
+
+apiCreate.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
 // API functions
 
 // Register a new user :
@@ -58,7 +73,7 @@ export const fetchProducts = async () => {
 
 // Create new product :
 export const createProduct = async (productData) => {
-  return await api.post('/produit/create', productData)
+  return await apiCreate.post('/produit/create', productData)
 }
 
 // Update product :

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import CartItem from '../components/CartItem'
 import Button from '../components/Button'
 
-import { getProductImageSrc, getProductImageAlt } from '../utils/productUtils'
+import { getProductImageURL } from '../utils/productUtils.js'
 
 import { useContext } from 'react'
 import { CartContext } from '../features/CartContext'
@@ -54,18 +54,22 @@ const Cart = () => {
       <div className='cart-items'>
         <h1 className='cart-items_title'>Panier</h1>
         <div className='cart-items_list'>
-          {cart.map((item) => (
-            <CartItem
-              key={item.id}
-              cartItemId={item.id}
-              cartItemImageSrc={getProductImageSrc(item.produit.categorie.id)}
-              cartItemImageAlt={getProductImageAlt(item.produit.categorie.id)}
-              cartItemName={item.produit.nom}
-              cartItemPrice={parseFloat(item.produit.prix)}
-              cartItemQuantity={item.quantity}
-              cartItemTotal={item.produit.prix * item.quantity}
-            />
-          ))}
+          {cart.map((item) => {
+            const fullImageURL = getProductImageURL(item.produit.image)
+
+            return (
+              <CartItem
+                key={item.id}
+                cartItemId={item.id}
+                cartItemImageSrc={fullImageURL}
+                cartItemImageAlt={item.produit.nom}
+                cartItemName={item.produit.nom}
+                cartItemPrice={parseFloat(item.produit.prix)}
+                cartItemQuantity={item.quantity}
+                cartItemTotal={item.produit.prix * item.quantity}
+              />
+            )
+          })}
         </div>
       </div>
       <div className='cart-total'>

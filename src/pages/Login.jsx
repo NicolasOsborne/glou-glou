@@ -13,21 +13,6 @@ const Login = () => {
   const [loginPassword, setLoginPassword] = useState('')
   const [error, setError] = useState('')
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     const response = await loginUser({
-  //       email: loginEmail,
-  //       password: loginPassword,
-  //     })
-  //     login(response.data.token, response.data.role)
-  //     console.log(response)
-  //     navigate('/')
-  //   } catch (err) {
-  //     setError(err.response.data.error || 'Erreur de connexion')
-  //   }
-  // }
-
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
@@ -35,11 +20,10 @@ const Login = () => {
         email: loginEmail,
         password: loginPassword,
       })
-      console.log(response) // Log the entire response
-      login(response.data.token, response.data.role) // This line may throw an error if response.data is undefined
+      login(response.data.token, response.data.role)
       navigate('/')
     } catch (err) {
-      console.error(err) // Log the error for debugging
+      console.error(err)
       setError(err.response?.data?.error || 'Erreur de connexion')
     }
   }

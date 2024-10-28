@@ -3,8 +3,6 @@ import ProductCard from './ProductCard'
 import useFilteredProducts from '../hooks/useFilteredProducts'
 import useProducts from '../hooks/useProducts'
 
-import { getProductImageSrc, getProductImageAlt } from '../utils/productUtils'
-
 const ProductList = () => {
   const { category } = useParams()
   const { products: allProducts, loading, error } = useProducts()
@@ -30,8 +28,8 @@ const ProductList = () => {
           productsToDisplay.map((product) => (
             <Link to={`/product/${product.id}`} key={product.id}>
               <ProductCard
-                productImageSrc={getProductImageSrc(product.categorie.id)}
-                productImageAlt={getProductImageAlt(product.categorie.id)}
+                productImageSrc={product.image}
+                productImageAlt={product.nom}
                 productName={product.nom}
                 productCategory={product.categorie.nameCategory}
                 productPrice={product.prix}

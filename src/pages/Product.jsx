@@ -5,7 +5,7 @@ import Button from '../components/Button'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useContext, useState, useEffect } from 'react'
 
-import { getProductImageSrc, getProductImageAlt } from '../utils/productUtils'
+import { getProductImageURL } from '../utils/productUtils'
 
 import { CartContext } from '../features/CartContext'
 import { fetchProducts } from '../api/api'
@@ -75,8 +75,8 @@ const ProductPage = () => {
         <div className='product-container'>
           <div className='product_image'>
             <img
-              src={getProductImageSrc(product.categorie.id)}
-              alt={getProductImageAlt(product.categorie.id)}
+              src={getProductImageURL(product.image)}
+              alt={product.nom}
               height={150}
               width={150}
             />
