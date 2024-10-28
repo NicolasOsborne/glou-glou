@@ -273,9 +273,9 @@ const Dashboard = () => {
                   key={order.id}
                   orderId={order.id}
                   orderCustomer={order.user}
-                  orderStatus={order.statut}
-                  onEditClick={() => handleOpenModal(order, 'order')}
-                  onDeleteClick={() => handleDeleteCategory(order)}
+                  orderStatus={order.StatutCommande}
+                  // onEditClick={() => handleOpenModal(order, 'order')}
+                  // onDeleteClick={() => handleDeleteCategory(order)}
                 />
               ))}
           </div>
