@@ -77,8 +77,8 @@ export const createProduct = async (productData) => {
 }
 
 // Update product :
-export const updateProduct = async (productData) => {
-  return await api.put(`/produit/update/${productData.id}`, productData)
+export const updateProduct = async (productId, productData) => {
+  return await apiCreate.put(`/produit/update/${productId}`, productData)
 }
 
 // Delete product :
@@ -87,19 +87,10 @@ export const deleteProduct = async (productData) => {
 }
 
 // Filter products :
-export const filterProducts = async (filters) => {
-  const { selectedCategory, minPrice, maxPrice, isNewProduct, searchProduct } =
-    filters
-
-  // Construct the query parameters
-  const params = new URLSearchParams()
-  if (selectedCategory) params.append('categorie', selectedCategory)
-  if (minPrice) params.append('prix_min', minPrice)
-  if (maxPrice) params.append('prix_max', maxPrice)
-  if (isNewProduct) params.append('nouveautes', true)
-  if (searchProduct) params.append('search', searchProduct)
-
-  return await api.get(`/produits/filter?${params.toString()}`)
+// By category:
+export const filterByCategory = async (categoryId) => {
+  const response = await api.get(`/produits/filter?categorie=${categoryId}`)
+  return response.data
 }
 
 // Cart

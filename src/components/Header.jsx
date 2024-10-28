@@ -49,7 +49,6 @@ const Header = () => {
               {userRole === 'ROLE_ADMIN' ? (
                 <>
                   <NavLink to='/dashboard' className='header-nav_logout'>
-                    <FaRegUser />
                     Dashboard
                   </NavLink>
                   <NavLink

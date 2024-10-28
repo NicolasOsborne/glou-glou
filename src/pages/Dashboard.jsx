@@ -11,6 +11,7 @@ import {
   updateCategory,
   deleteCategory,
   deleteProduct,
+  updateProduct,
 } from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
@@ -39,7 +40,6 @@ const Dashboard = () => {
   const location = useLocation()
 
   useEffect(() => {
-    // Determine the current view based on the URL
     const path = location.pathname.split('/').pop()
     if (path === 'categories') {
       setCurrentView('categories')
@@ -101,9 +101,26 @@ const Dashboard = () => {
     }
   }
 
-  const handleUpdateProduct = (updatedProduct) => {
-    console.log('Updated Product:', updatedProduct)
-    handleCloseModal()
+  const handleUpdateProduct = async (updatedProduct) => {
+    try {
+      const payload = {
+        nameProduit: updatedProduct.nom,
+        descriptionProduit: updatedProduct.description,
+        price: updatedProduct.prix,
+        quantiteProduit: updatedProduct.quantite,
+        imageProduit: updatedProduct.image,
+      }
+      console.log('Updating product with payload:', payload)
+      const response = await updateProduct(selectedItem.id, payload)
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.id === selectedItem.id ? response.data : product
+        )
+      )
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error updating product:', error.response?.data || error)
+    }
   }
 
   const handleDeleteProduct = async (product) => {
@@ -235,11 +252,13 @@ const Dashboard = () => {
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {formType === 'product' && selectedItem && (
           <ProductEditForm
+            productId={selectedItem.id}
             productName={selectedItem.nom}
             productCategory={selectedItem.categorie.nameCategory}
             productDescription={selectedItem.description}
             productPrice={selectedItem.prix}
             productStock={selectedItem.quantite}
+            productImage={selectedItem.image}
             onFormSubmit={handleUpdateProduct}
           />
         )}

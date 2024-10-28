@@ -1,11 +1,27 @@
 import { FaChevronRight } from 'react-icons/fa6'
 import { FaSearch } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import useCategories from '../hooks/useCategories'
 
-const Filters = () => {
+import { filterByCategory } from '../api/api'
+
+const Filters = ({
+  setFilteredProducts,
+  setSelectedCategory,
+  handleShowAllProducts,
+}) => {
   const { categories, loading, error } = useCategories()
+
+  const handleCategoryClick = async (category) => {
+    try {
+      const response = await filterByCategory(category.id)
+      setFilteredProducts(response)
+      setSelectedCategory(category)
+    } catch (error) {
+      console.error('Error filtering products:', error)
+    }
+  }
 
   if (loading) {
     return <p>Chargement des catégories...</p>
@@ -20,15 +36,19 @@ const Filters = () => {
       <div className='filters-categories'>
         <h3 className='filters-categories_title'>Catégories</h3>
         <div className='filters-categories_list'>
+          <div className='filters-category' onClick={handleShowAllProducts}>
+            <FaChevronRight className='filters-category_chevron' />
+            <p className='filters-category_name'>Tous les produits</p>
+          </div>
           {categories.map((category) => (
-            <Link
-              to={`/category/${category.nameCategory.toLowerCase()}`}
+            <div
               className='filters-category'
               key={category.id}
+              onClick={() => handleCategoryClick(category)}
             >
               <FaChevronRight className='filters-category_chevron' />
               <p className='filters-category_name'>{category.nameCategory}</p>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
@@ -64,6 +84,12 @@ const Filters = () => {
       </div>
     </aside>
   )
+}
+
+Filters.propTypes = {
+  setFilteredProducts: PropTypes.func.isRequired,
+  setSelectedCategory: PropTypes.func.isRequired,
+  handleShowAllProducts: PropTypes.func.isRequired,
 }
 
 export default Filters

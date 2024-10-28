@@ -4,21 +4,26 @@ import { PropTypes } from 'prop-types'
 
 import Button from './Button'
 
-import { fetchCategories } from '../api/api'
+import { fetchCategories, updateProduct } from '../api/api'
+
+import { getProductImageURL } from '../utils/productUtils.js'
 
 const ProductEditForm = ({
+  productId,
   productName,
   productCategory,
   productDescription,
   productPrice,
   productStock,
+  productImage,
   onFormSubmit,
 }) => {
   const [name, setName] = useState(productName)
-  const [category, setCategory] = useState(productCategory)
+  const [categoryId, setCategoryId] = useState(productCategory)
   const [description, setDescription] = useState(productDescription)
   const [price, setPrice] = useState(parseFloat(productPrice).toFixed(2))
   const [stockQuantity, setStockQuantity] = useState(productStock)
+  const [image, setImage] = useState(null)
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
@@ -33,11 +38,26 @@ const ProductEditForm = ({
     fetchCategoriesData()
   }, [])
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
-    // Update the product information in the database (not implemented yet)
-    onFormSubmit({ name, category, description, price, stockQuantity })
+    const formData = new FormData()
+    formData.append('nameProduit', name)
+    formData.append('categorie', categoryId)
+    formData.append('descriptionProduit', description)
+    formData.append('price', price)
+    formData.append('quantiteProduit', stockQuantity)
+    formData.append('imageProduit', image)
+
+    try {
+      const response = await updateProduct(productId, formData)
+      console.log('Form:', response.data)
+      onFormSubmit(response.data)
+    } catch (error) {
+      console.error('Error editing product:', error.response.data)
+    }
   }
+
+  const fullImageURL = getProductImageURL(productImage)
 
   return (
     <form className='product-edit-form' onSubmit={handleFormSubmit}>
@@ -55,12 +75,12 @@ const ProductEditForm = ({
         <label>Catégorie :</label>
         <select
           className='product-edit-form_category'
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
           required
         >
           {categories.map((cat) => (
-            <option key={cat.id} value={cat.nameCategory}>
+            <option key={cat.id} value={cat.id}>
               {cat.nameCategory}
             </option>
           ))}
@@ -95,6 +115,19 @@ const ProductEditForm = ({
           required
         />
       </div>
+      <div className='product-edit-form_entry'>
+        <label>Image :</label>
+        <div className='product-edit-form_image-display'>
+          <img src={fullImageURL} alt={productName} />
+        </div>
+        <input
+          className='product-edit-form_image'
+          type='file'
+          accept='image/*'
+          onChange={(e) => setImage(e.target.files[0])}
+          required
+        />
+      </div>
       <Button
         className='product-edit-form_button'
         buttonText='Valider les modifications'
@@ -105,11 +138,13 @@ const ProductEditForm = ({
 }
 
 ProductEditForm.propTypes = {
+  productId: PropTypes.number.isRequired,
   productName: PropTypes.string.isRequired,
   productCategory: PropTypes.string.isRequired,
   productDescription: PropTypes.string.isRequired,
   productPrice: PropTypes.number.isRequired,
   productStock: PropTypes.number.isRequired,
+  productImage: PropTypes.string,
   onFormSubmit: PropTypes.func.isRequired,
 }
 
