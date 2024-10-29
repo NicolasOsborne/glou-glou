@@ -29,7 +29,8 @@ header {
     flex-direction: row;
     gap: 35px;
 
-    &_login {
+    &_login,
+    &_logout {
       padding: 14px;
       background-color: $color-white;
       color: $color-black;
@@ -43,7 +44,7 @@ header {
       gap: 5px;
     }
 
-    &_logout {
+    &_dashboard {
       padding: 14px;
       background-color: $color-primary;
       color: $color-white;

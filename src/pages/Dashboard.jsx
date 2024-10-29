@@ -286,7 +286,7 @@ const Dashboard = () => {
           <ProductEditForm
             productId={selectedItem.id}
             productName={selectedItem.nom}
-            productCategory={selectedItem.categorie.nameCategory}
+            productCategory={selectedItem.categorie.id}
             productDescription={selectedItem.description}
             productPrice={selectedItem.prix}
             productStock={selectedItem.quantite}

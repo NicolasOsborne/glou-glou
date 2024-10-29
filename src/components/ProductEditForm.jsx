@@ -23,7 +23,7 @@ const ProductEditForm = ({
   const [description, setDescription] = useState(productDescription)
   const [price, setPrice] = useState(parseFloat(productPrice).toFixed(2))
   const [stockQuantity, setStockQuantity] = useState(productStock)
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(productImage)
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
@@ -46,14 +46,23 @@ const ProductEditForm = ({
     formData.append('descriptionProduit', description)
     formData.append('price', price)
     formData.append('quantiteProduit', stockQuantity)
-    formData.append('imageProduit', image)
+    if (image) {
+      formData.append('imageProduit', image)
+    }
+
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value)
+    }
 
     try {
       const response = await updateProduct(productId, formData)
       console.log('Form:', response.data)
       onFormSubmit(response.data)
     } catch (error) {
-      console.error('Error editing product:', error.response.data)
+      console.error(
+        'Error editing product:',
+        error.response ? error.response.data : error
+      )
     }
   }
 
@@ -140,7 +149,7 @@ const ProductEditForm = ({
 ProductEditForm.propTypes = {
   productId: PropTypes.number.isRequired,
   productName: PropTypes.string.isRequired,
-  productCategory: PropTypes.string.isRequired,
+  productCategory: PropTypes.number.isRequired,
   productDescription: PropTypes.string.isRequired,
   productPrice: PropTypes.number.isRequired,
   productStock: PropTypes.number.isRequired,
