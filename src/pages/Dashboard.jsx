@@ -13,6 +13,7 @@ import {
   deleteProduct,
   updateProduct,
   fetchOrders,
+  fetchTopProducts,
 } from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
@@ -28,6 +29,7 @@ import CategoryCreateForm from '../components/CategoryCreateForm'
 import Modal from '../components/Modal'
 import Button from '../components/Button'
 import DashboardOrder from '../components/DashboardOrder'
+import DashboardTop from '../components/DashboardTop'
 
 const Dashboard = () => {
   // State management
@@ -39,6 +41,7 @@ const Dashboard = () => {
   const [selectedItem, setSelectedItem] = useState(null)
   const [formType, setFormType] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [topProducts, setTopProducts] = useState([])
 
   const location = useLocation()
 
@@ -56,6 +59,11 @@ const Dashboard = () => {
       setCurrentView('orders')
       setTitle('Commandes')
       fetchOrdersData()
+    } else if (path === 'top-orders') {
+      // Assuming you have a route for top products
+      setCurrentView('top-orders')
+      setTitle('Produits les plus vendus')
+      fetchTopProductsData()
     } else {
       setCurrentView('')
       setTitle('Dashboard')
@@ -99,6 +107,27 @@ const Dashboard = () => {
       setOrders(ordersWithProductNames)
     } catch (error) {
       console.error('Error fetching orders:', error)
+    }
+  }
+
+  // Retrieve top products data from database with API call
+  const fetchTopProductsData = async () => {
+    try {
+      const response = await fetchTopProducts()
+
+      // Assuming you have already fetched products data
+      const topProductsWithNames = response.data.map((topProduct) => {
+        // Find the product by ID in the products array
+        const product = products.find((p) => p.id === topProduct.produit_id)
+        return {
+          ...topProduct,
+          product_name: product ? product.nom : 'Unknown Product', // Fallback if product is not found
+        }
+      })
+
+      setTopProducts(topProductsWithNames)
+    } catch (error) {
+      console.error('Error fetching top products:', error)
     }
   }
 
@@ -226,6 +255,10 @@ const Dashboard = () => {
             <FaChevronRight className='dashboard-filters_link_chevron' />
             <p className='dashboard-filters_link_name'>Commandes</p>
           </Link>
+          <Link to='/dashboard/top-orders' className='dashboard-filters_link'>
+            <FaChevronRight className='dashboard-filters_link_chevron' />
+            <p className='dashboard-filters_link_name'>Les + vendus</p>
+          </Link>
         </aside>
         <div className='dashboard-content'>
           <h1 className='dashboard-content_title'>{title}</h1>
@@ -284,6 +317,15 @@ const Dashboard = () => {
                   orderQuantity={order.quantity}
                   // onEditClick={() => handleOpenModal(order, 'order')}
                   // onDeleteClick={() => handleDeleteCategory(order)}
+                />
+              ))}
+            {currentView === 'top-orders' &&
+              topProducts.map((product) => (
+                <DashboardTop
+                  key={product.produit_id}
+                  productId={product.produit_id}
+                  productName={product.product_name}
+                  totalSold={product.total_vendu}
                 />
               ))}
           </div>

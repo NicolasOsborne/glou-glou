@@ -78,6 +78,14 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path='/dashboard/top-orders'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
       <Route path='*' element={<Error />} />
     </Routes>
   )

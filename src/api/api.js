@@ -122,4 +122,9 @@ export const fetchOrders = async () => {
   return await api.get('/historique')
 }
 
+// Fetch top products
+export const fetchTopProducts = async () => {
+  return await api.get('/top-products')
+}
+
 export default api
