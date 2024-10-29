@@ -40,9 +40,13 @@ const Cart = () => {
   }
 
   // Gestion du click sur le bouton de validation de la commande
-  const handleOrderValidation = () => {
-    handleValidateOrder()
-    navigate('/confirmation')
+  const handleOrderValidation = async () => {
+    try {
+      await handleValidateOrder()
+      navigate('/confirmation')
+    } catch (error) {
+      console.error('Error during order validation:', error)
+    }
   }
 
   if (loading) {

@@ -1,5 +1,5 @@
 import { FaChevronRight } from 'react-icons/fa6'
-import { FaSearch } from 'react-icons/fa'
+// import { FaSearch } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 
 import useCategories from '../hooks/useCategories'
@@ -52,7 +52,7 @@ const Filters = ({
           ))}
         </div>
       </div>
-      <div className='filters-new'>
+      {/* <div className='filters-new'>
         <FaChevronRight className='filters-category_chevron' />
         <p className='filters-new_name'>Nouveautés</p>
       </div>
@@ -81,7 +81,7 @@ const Filters = ({
         <button className='filters-search_button'>
           <FaSearch size={13} className='filters-search_button_icon' />
         </button>
-      </div>
+      </div> */}
     </aside>
   )
 }

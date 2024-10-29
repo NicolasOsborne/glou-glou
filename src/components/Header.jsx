@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 
 import { FaRegUser, FaShoppingCart } from 'react-icons/fa'
 
-import CategoriesNav from './CategoriesNav'
+// import CategoriesNav from './CategoriesNav'
 
 import Logo from '../assets/logos/logo-header.svg'
 import MobileLogo from '../assets/logos/logo-mobile.svg'
@@ -83,7 +83,7 @@ const Header = () => {
           </NavLink>
         </nav>
       </header>
-      <CategoriesNav />
+      {/* <CategoriesNav /> */}
     </>
   )
 }
