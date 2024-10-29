@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 
 const DashboardOrder = ({
   orderId,
-  orderCustomer,
-  orderStatus,
+  orderProduct,
+  orderQuantity,
   // onEditClick,
   // onDeleteClick,
 }) => {
@@ -13,8 +13,8 @@ const DashboardOrder = ({
     <div className='dashboard-item-card'>
       <div className='dashboard-item_details'>
         <h3 className='dashboard-item_details_id'>{orderId}</h3>
-        <p className='dashboard-item_details_info'>{orderCustomer.nomUser}</p>
-        <p className='dashboard-item_details_info'>{orderStatus}</p>
+        <p className='dashboard-item_details_info'>{orderProduct}</p>
+        <p className='dashboard-item_details_info'>{orderQuantity}</p>
       </div>
       {/* <div className='dashboard-item_actions'>
         <FaRegEdit
@@ -34,11 +34,8 @@ const DashboardOrder = ({
 
 DashboardOrder.propTypes = {
   orderId: PropTypes.number.isRequired,
-  orderCustomer: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    nomUser: PropTypes.string.isRequired,
-  }).isRequired,
-  orderStatus: PropTypes.string.isRequired,
+  orderProduct: PropTypes.string.isRequired,
+  orderQuantity: PropTypes.number,
   // onEditClick: PropTypes.func.isRequired,
   // onDeleteClick: PropTypes.func.isRequired,
 }

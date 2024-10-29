@@ -24,8 +24,8 @@ const DashboardHeader = ({ currentView }) => {
         return (
           <div className='dashboard-header-entries'>
             <p className='dashboard-header_id'>ID</p>
-            <p className='dashboard-header_entry'>Client</p>
-            <p className='dashboard-header_entry'>Statut</p>
+            <p className='dashboard-header_entry'>Produit</p>
+            <p className='dashboard-header_entry'>Quantité</p>
           </div>
         )
     }

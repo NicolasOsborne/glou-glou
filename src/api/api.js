@@ -119,7 +119,7 @@ export const validateOrder = async () => {
 
 // Order history
 export const fetchOrders = async () => {
-  return await api.get('/history')
+  return await api.get('/historique')
 }
 
 export default api

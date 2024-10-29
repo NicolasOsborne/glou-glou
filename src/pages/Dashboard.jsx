@@ -88,7 +88,15 @@ const Dashboard = () => {
   const fetchOrdersData = async () => {
     try {
       const response = await fetchOrders()
-      setOrders(response.data)
+      const ordersWithProductNames = response.data.map((order) => {
+        // Find the product by ID in the products array
+        const product = products.find((p) => p.id === order.produit_id)
+        return {
+          ...order,
+          productName: product ? product.nom : 'Unknown Product', // Fallback if product is not found
+        }
+      })
+      setOrders(ordersWithProductNames)
     } catch (error) {
       console.error('Error fetching orders:', error)
     }
@@ -272,8 +280,8 @@ const Dashboard = () => {
                 <DashboardOrder
                   key={order.id}
                   orderId={order.id}
-                  orderCustomer={order.user}
-                  orderStatus={order.StatutCommande}
+                  orderProduct={order.productName}
+                  orderQuantity={order.quantity}
                   // onEditClick={() => handleOpenModal(order, 'order')}
                   // onDeleteClick={() => handleDeleteCategory(order)}
                 />
