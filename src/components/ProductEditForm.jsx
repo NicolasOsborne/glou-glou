@@ -42,16 +42,16 @@ const ProductEditForm = ({
     e.preventDefault()
     const formData = new FormData()
     formData.append('nameProduit', name)
-    formData.append('categorie', categoryId)
+    formData.append('categorie', Number(categoryId))
     formData.append('descriptionProduit', description)
-    formData.append('price', price)
-    formData.append('quantiteProduit', stockQuantity)
+    formData.append('price', Number(price))
+    formData.append('quantiteProduit', Number(stockQuantity))
     if (image) {
       formData.append('imageProduit', image)
     }
 
     for (let [key, value] of formData.entries()) {
-      console.log(key, value)
+      console.log(`${key}: ${value} (type: ${typeof value})`)
     }
 
     try {
@@ -89,7 +89,7 @@ const ProductEditForm = ({
           required
         >
           {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
+            <option key={cat.id} value={cat.id} type='number'>
               {cat.nameCategory}
             </option>
           ))}

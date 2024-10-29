@@ -14,6 +14,7 @@ import {
   updateProduct,
   fetchOrders,
   fetchTopProducts,
+  // fetchTotalProductSold,
 } from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
@@ -42,6 +43,7 @@ const Dashboard = () => {
   const [formType, setFormType] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [topProducts, setTopProducts] = useState([])
+  // const [totalSold, setTotalSold] = useState(0)
 
   const location = useLocation()
 
@@ -59,6 +61,7 @@ const Dashboard = () => {
       setCurrentView('orders')
       setTitle('Commandes')
       fetchOrdersData()
+      // fetchTotalSoldProducts()
     } else if (path === 'top-orders') {
       // Assuming you have a route for top products
       setCurrentView('top-orders')
@@ -130,6 +133,23 @@ const Dashboard = () => {
       console.error('Error fetching top products:', error)
     }
   }
+
+  // Fetch total sold products for each order
+  // const fetchTotalSoldProducts = async () => {
+  //   let total = 0
+  //   for (const order of orders) {
+  //     try {
+  //       const response = await fetchTotalProductSold(order.produit_id)
+  //       total += response.total_quantity || 0 // Add to total if available
+  //     } catch (error) {
+  //       console.error(
+  //         `Error fetching total sold for product ID ${order.produit_id}:`,
+  //         error
+  //       )
+  //     }
+  //   }
+  //   setTotalSold(total) // Update the total sold state
+  // }
 
   // Modal
   const handleOpenModal = (item, type) => {

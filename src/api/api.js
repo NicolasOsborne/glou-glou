@@ -127,4 +127,9 @@ export const fetchTopProducts = async () => {
   return await api.get('/top-products')
 }
 
+// Fetch total products sold
+export const fetchTotalProductSold = async (productId) => {
+  return await api.get(`/total-product-sold/${productId}`)
+}
+
 export default api
