@@ -23,7 +23,8 @@ const Login = () => {
       login(response.data.token, response.data.role)
       navigate('/')
     } catch (err) {
-      setError(err.response.data.error || 'Erreur de connexion')
+      console.error(err)
+      setError(err.response?.data?.error || 'Erreur de connexion')
     }
   }
 

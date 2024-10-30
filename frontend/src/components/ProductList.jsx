@@ -1,16 +1,11 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import ProductCard from './ProductCard'
-import useFilteredProducts from '../hooks/useFilteredProducts'
+
 import useProducts from '../hooks/useProducts'
 
-import { getProductImageSrc, getProductImageAlt } from '../utils/productUtils'
-
-const ProductList = () => {
-  const { category } = useParams()
-  const { products: allProducts, loading, error } = useProducts()
-  const { products: filteredProducts } = useFilteredProducts()
-
-  const productsToDisplay = category ? filteredProducts : allProducts
+const ProductList = ({ filteredProducts, selectedCategory }) => {
+  const { loading, error } = useProducts()
 
   if (loading) {
     return <p>Chargement des produits...</p>
@@ -23,15 +18,15 @@ const ProductList = () => {
   return (
     <div className='products'>
       <h1 className='products-title'>
-        {category ? category : 'Tous les produits'}
+        {selectedCategory ? selectedCategory.nameCategory : 'Tous les produits'}
       </h1>
       <div className='products-container'>
-        {productsToDisplay.length > 0 ? (
-          productsToDisplay.map((product) => (
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
             <Link to={`/product/${product.id}`} key={product.id}>
               <ProductCard
-                productImageSrc={getProductImageSrc(product.categorie.id)}
-                productImageAlt={getProductImageAlt(product.categorie.id)}
+                productImageSrc={product.image}
+                productImageAlt={product.nom}
                 productName={product.nom}
                 productCategory={product.categorie.nameCategory}
                 productPrice={product.prix}
@@ -45,6 +40,23 @@ const ProductList = () => {
       </div>
     </div>
   )
+}
+
+ProductList.propTypes = {
+  filteredProducts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      nom: PropTypes.string.isRequired,
+      categorie: PropTypes.shape({
+        nameCategory: PropTypes.string.isRequired,
+      }).isRequired,
+      prix: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  selectedCategory: PropTypes.shape({
+    nameCategory: PropTypes.string.isRequired,
+  }),
 }
 
 export default ProductList

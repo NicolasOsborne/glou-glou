@@ -35,49 +35,16 @@ const ProductCreateForm = ({ onFormSubmit }) => {
     formData.append('descriptionProduit', description)
     formData.append('price', price)
     formData.append('quantiteProduit', stockQuantity)
-    if (image) {
-      formData.append('imageProduit', image)
-    }
+    formData.append('imageProduit', image)
+
     try {
       const response = await createProduct(formData)
       console.log('Form:', response.data)
       onFormSubmit(response.data)
     } catch (error) {
-      console.error('Error creating new product:', error)
+      console.error('Error creating new product:', error.response.data)
     }
   }
-
-  //   const handleFormSubmit = async (e) => {
-  //     e.preventDefault()
-  //     const productData = {
-  //       nameProduit: name,
-  //       categorie: categoryId,
-  //       descriptionProduit: description,
-  //       price: price,
-  //       quantiteProduit: stockQuantity,
-  //     }
-  //     let imageBase64 = null
-  //     if (image) {
-  //       const reader = new FileReader()
-  //       reader.readAsDataURL(image)
-  //       reader.onloadend = async () => {
-  //         imageBase64 = reader.result
-  //         productData.imageProduit = imageBase64
-  //         await sendProductData(productData)
-  //       }
-  //     } else {
-  //       await sendProductData(productData)
-  //     }
-  //   }
-
-  //   const sendProductData = async (productData) => {
-  //     try {
-  //       const response = await createProduct(productData)
-  //       onFormSubmit(response.data)
-  //     } catch (error) {
-  //       console.error('Error creating new product:', error)
-  //     }
-  //   }
 
   return (
     <form className='product-edit-form' onSubmit={handleFormSubmit}>
@@ -100,6 +67,9 @@ const ProductCreateForm = ({ onFormSubmit }) => {
           onChange={(e) => setCategoryId(e.target.value)}
           required
         >
+          <option value='' disabled>
+            Sélectionner une catégorie
+          </option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.nameCategory}

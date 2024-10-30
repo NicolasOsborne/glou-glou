@@ -20,6 +20,22 @@ const DashboardHeader = ({ currentView }) => {
             <p className='dashboard-header_entry'>Nom</p>
           </div>
         )
+      case 'orders':
+        return (
+          <div className='dashboard-header-entries'>
+            <p className='dashboard-header_id'>ID</p>
+            <p className='dashboard-header_entry'>Produit</p>
+            <p className='dashboard-header_entry'>Quantité</p>
+          </div>
+        )
+      case 'top-orders':
+        return (
+          <div className='dashboard-header-entries'>
+            <p className='dashboard-header_id'>ID</p>
+            <p className='dashboard-header_entry'>Produit</p>
+            <p className='dashboard-header_entry'>Total vendu</p>
+          </div>
+        )
     }
   }
 

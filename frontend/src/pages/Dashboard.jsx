@@ -11,6 +11,10 @@ import {
   updateCategory,
   deleteCategory,
   deleteProduct,
+  updateProduct,
+  fetchOrders,
+  fetchTopProducts,
+  // fetchTotalProductSold,
 } from '../api/api'
 
 import DashboardHeader from '../components/DashboardHeader'
@@ -25,6 +29,8 @@ import CategoryCreateForm from '../components/CategoryCreateForm'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
+import DashboardOrder from '../components/DashboardOrder'
+import DashboardTop from '../components/DashboardTop'
 
 const Dashboard = () => {
   // State management
@@ -32,14 +38,16 @@ const Dashboard = () => {
   const [title, setTitle] = useState('Dashboard')
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
+  const [orders, setOrders] = useState([])
   const [selectedItem, setSelectedItem] = useState(null)
   const [formType, setFormType] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [topProducts, setTopProducts] = useState([])
+  // const [totalSold, setTotalSold] = useState(0)
 
   const location = useLocation()
 
   useEffect(() => {
-    // Determine the current view based on the URL
     const path = location.pathname.split('/').pop()
     if (path === 'categories') {
       setCurrentView('categories')
@@ -49,6 +57,16 @@ const Dashboard = () => {
       setCurrentView('products')
       setTitle('Produits')
       fetchProductsData()
+    } else if (path === 'orders') {
+      setCurrentView('orders')
+      setTitle('Commandes')
+      fetchOrdersData()
+      // fetchTotalSoldProducts()
+    } else if (path === 'top-orders') {
+      // Assuming you have a route for top products
+      setCurrentView('top-orders')
+      setTitle('Produits les plus vendus')
+      fetchTopProductsData()
     } else {
       setCurrentView('')
       setTitle('Dashboard')
@@ -77,6 +95,62 @@ const Dashboard = () => {
     }
   }
 
+  // Retrieve orders data from database with API call
+  const fetchOrdersData = async () => {
+    try {
+      const response = await fetchOrders()
+      const ordersWithProductNames = response.data.map((order) => {
+        // Find the product by ID in the products array
+        const product = products.find((p) => p.id === order.produit_id)
+        return {
+          ...order,
+          productName: product ? product.nom : 'Unknown Product', // Fallback if product is not found
+        }
+      })
+      setOrders(ordersWithProductNames)
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+    }
+  }
+
+  // Retrieve top products data from database with API call
+  const fetchTopProductsData = async () => {
+    try {
+      const response = await fetchTopProducts()
+
+      // Assuming you have already fetched products data
+      const topProductsWithNames = response.data.map((topProduct) => {
+        // Find the product by ID in the products array
+        const product = products.find((p) => p.id === topProduct.produit_id)
+        return {
+          ...topProduct,
+          product_name: product ? product.nom : 'Unknown Product', // Fallback if product is not found
+        }
+      })
+
+      setTopProducts(topProductsWithNames)
+    } catch (error) {
+      console.error('Error fetching top products:', error)
+    }
+  }
+
+  // Fetch total sold products for each order
+  // const fetchTotalSoldProducts = async () => {
+  //   let total = 0
+  //   for (const order of orders) {
+  //     try {
+  //       const response = await fetchTotalProductSold(order.produit_id)
+  //       total += response.total_quantity || 0 // Add to total if available
+  //     } catch (error) {
+  //       console.error(
+  //         `Error fetching total sold for product ID ${order.produit_id}:`,
+  //         error
+  //       )
+  //     }
+  //   }
+  //   setTotalSold(total) // Update the total sold state
+  // }
+
   // Modal
   const handleOpenModal = (item, type) => {
     setSelectedItem(item)
@@ -101,9 +175,26 @@ const Dashboard = () => {
     }
   }
 
-  const handleUpdateProduct = (updatedProduct) => {
-    console.log('Updated Product:', updatedProduct)
-    handleCloseModal()
+  const handleUpdateProduct = async (updatedProduct) => {
+    try {
+      const payload = {
+        nameProduit: updatedProduct.nom,
+        descriptionProduit: updatedProduct.description,
+        price: updatedProduct.prix,
+        quantiteProduit: updatedProduct.quantite,
+        imageProduit: updatedProduct.image,
+      }
+      console.log('Updating product with payload:', payload)
+      const response = await updateProduct(selectedItem.id, payload)
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.id === selectedItem.id ? response.data : product
+        )
+      )
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error updating product:', error.response?.data || error)
+    }
   }
 
   const handleDeleteProduct = async (product) => {
@@ -180,6 +271,14 @@ const Dashboard = () => {
             <FaChevronRight className='dashboard-filters_link_chevron' />
             <p className='dashboard-filters_link_name'>Catégories</p>
           </Link>
+          <Link to='/dashboard/orders' className='dashboard-filters_link'>
+            <FaChevronRight className='dashboard-filters_link_chevron' />
+            <p className='dashboard-filters_link_name'>Commandes</p>
+          </Link>
+          <Link to='/dashboard/top-orders' className='dashboard-filters_link'>
+            <FaChevronRight className='dashboard-filters_link_chevron' />
+            <p className='dashboard-filters_link_name'>Les + vendus</p>
+          </Link>
         </aside>
         <div className='dashboard-content'>
           <h1 className='dashboard-content_title'>{title}</h1>
@@ -229,17 +328,39 @@ const Dashboard = () => {
                   return null
                 }
               })}
+            {currentView === 'orders' &&
+              orders.map((order) => (
+                <DashboardOrder
+                  key={order.id}
+                  orderId={order.id}
+                  orderProduct={order.productName}
+                  orderQuantity={order.quantity}
+                  // onEditClick={() => handleOpenModal(order, 'order')}
+                  // onDeleteClick={() => handleDeleteCategory(order)}
+                />
+              ))}
+            {currentView === 'top-orders' &&
+              topProducts.map((product) => (
+                <DashboardTop
+                  key={product.produit_id}
+                  productId={product.produit_id}
+                  productName={product.product_name}
+                  totalSold={product.total_vendu}
+                />
+              ))}
           </div>
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {formType === 'product' && selectedItem && (
           <ProductEditForm
+            productId={selectedItem.id}
             productName={selectedItem.nom}
-            productCategory={selectedItem.categorie.nameCategory}
+            productCategory={selectedItem.categorie.id}
             productDescription={selectedItem.description}
             productPrice={selectedItem.prix}
             productStock={selectedItem.quantite}
+            productImage={selectedItem.image}
             onFormSubmit={handleUpdateProduct}
           />
         )}

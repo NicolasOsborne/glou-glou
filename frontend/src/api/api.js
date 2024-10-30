@@ -17,6 +17,21 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+const apiCreate = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+})
+
+apiCreate.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
 // API functions
 
 // Register a new user :
@@ -58,12 +73,12 @@ export const fetchProducts = async () => {
 
 // Create new product :
 export const createProduct = async (productData) => {
-  return await api.post('/produit/create', productData)
+  return await apiCreate.post('/produit/create', productData)
 }
 
 // Update product :
-export const updateProduct = async (productData) => {
-  return await api.put(`/produit/update/${productData.id}`, productData)
+export const updateProduct = async (productId, productData) => {
+  return await apiCreate.put(`/produit/update/${productId}`, productData)
 }
 
 // Delete product :
@@ -72,20 +87,19 @@ export const deleteProduct = async (productData) => {
 }
 
 // Filter products :
-export const filterProducts = async (filters) => {
-  const { selectedCategory, minPrice, maxPrice, isNewProduct, searchProduct } =
-    filters
-
-  // Construct the query parameters
-  const params = new URLSearchParams()
-  if (selectedCategory) params.append('categorie', selectedCategory)
-  if (minPrice) params.append('prix_min', minPrice)
-  if (maxPrice) params.append('prix_max', maxPrice)
-  if (isNewProduct) params.append('nouveautes', true)
-  if (searchProduct) params.append('search', searchProduct)
-
-  return await api.get(`/produits/filter?${params.toString()}`)
+// By category:
+export const filterByCategory = async (categoryId) => {
+  const response = await api.get(`/produits/filter?categorie=${categoryId}`)
+  return response.data
 }
+
+// By date :
+
+// By price :
+
+// By name :
+
+// Combined filters :
 
 // Cart
 // Add product to cart
@@ -101,6 +115,21 @@ export const fetchUserCart = async () => {
 // Validate order
 export const validateOrder = async () => {
   return await api.post('/cart/validate')
+}
+
+// Order history
+export const fetchOrders = async () => {
+  return await api.get('/historique')
+}
+
+// Fetch top products
+export const fetchTopProducts = async () => {
+  return await api.get('/top-products')
+}
+
+// Fetch total products sold
+export const fetchTotalProductSold = async (productId) => {
+  return await api.get(`/total-product-sold/${productId}`)
 }
 
 export default api
