@@ -1,0 +1,17 @@
+// Global display
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+}
+
+main {
+  height: 100%;
+}

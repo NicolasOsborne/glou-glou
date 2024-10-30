@@ -1,0 +1,26 @@
+.hero {
+  width: 100%;
+
+  &_image {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    @include border;
+  }
+
+  @include tablet {
+    .hero {
+      &_image {
+        height: 200px;
+      }
+    }
+  }
+
+  @include mobile {
+    .hero {
+      &_image {
+        height: 100px;
+      }
+    }
+  }
+}

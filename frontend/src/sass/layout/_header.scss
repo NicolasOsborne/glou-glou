@@ -1,0 +1,104 @@
+header {
+  width: 100vw;
+  height: 90px;
+  padding: 0 70px;
+  background-color: $color-secondary;
+  @include border;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .header-logo {
+    img {
+      height: 70px;
+      width: 260px;
+    }
+
+    .desktop-logo {
+      display: inline-block;
+    }
+
+    .mobile-logo {
+      display: none;
+    }
+  }
+
+  .header-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+
+    &_login,
+    &_logout {
+      padding: 14px;
+      background-color: $color-white;
+      color: $color-black;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid $color-black;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+
+    &_dashboard {
+      padding: 14px;
+      background-color: $color-primary;
+      color: $color-white;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid $color-black;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+
+    &_cart {
+      padding: 14px;
+      background-color: $color-primary;
+      color: $color-white;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid $color-black;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+
+  @include mobile {
+    padding: 0 20px;
+
+    .header-logo {
+      img {
+        height: 60px;
+        width: 48px;
+      }
+
+      .desktop-logo {
+        display: none;
+      }
+
+      .mobile-logo {
+        display: inline-block;
+      }
+    }
+
+    .header-nav {
+      gap: 20px;
+
+      &_login,
+      &_cart {
+        font-size: 14px;
+        padding: 12px;
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+// Responsive Breakpoints mixins
+
+@mixin small-desktop {
+  @media only screen and (min-width: calc($screen-tablet + 1px)) and (max-width: $screen-small-desktop) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (min-width: calc($screen-mobile + 1px)) and (max-width: $screen-tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media only screen and (max-width: $screen-mobile) {
+    @content;
+  }
+}
+
+// Font mixins
+@mixin logoFont {
+  font-family: $font-delius-unicase;
+}
+
+@mixin bodyFont {
+  font-family: $font-montserrat;
+}
+
+// Shadow
+@mixin buttonShadow {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@mixin cardShadow {
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+// Border
+@mixin border {
+  border-bottom: 2px solid $color-black;
+}

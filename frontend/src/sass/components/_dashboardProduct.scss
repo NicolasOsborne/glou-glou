@@ -1,0 +1,62 @@
+.dashboard-item-card {
+  @include cardShadow;
+  width: 100%;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .dashboard-item_details {
+    display: grid;
+    grid-template-columns: 20px 3fr 2fr 1fr 1fr;
+    width: 90%;
+    align-items: center;
+    justify-items: center;
+
+    &_id {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    &_info {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
+  .dashboard-item_actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+
+    &_edit,
+    &_delete {
+      cursor: pointer;
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+
+  @include mobile {
+    padding: 20px 15px;
+
+    .dashboard-item_details {
+      &_id,
+      &_info {
+        font-size: 16px;
+      }
+    }
+
+    .dashboard-item_actions {
+      gap: 10px;
+
+      &_edit,
+      &_delete {
+        height: 16px;
+      }
+    }
+  }
+}

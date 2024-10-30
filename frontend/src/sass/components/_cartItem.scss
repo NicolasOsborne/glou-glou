@@ -1,0 +1,141 @@
+.cart-item-card {
+  @include cardShadow;
+  width: 100%;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .cart-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+
+    &_image {
+      height: fit-content;
+      padding: 12px 12px;
+      border: 2px solid $color-primary;
+      border-radius: 5px;
+      @include cardShadow;
+
+      img {
+        height: 64px;
+        width: 64px;
+      }
+    }
+
+    &_details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+
+      &_name {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      &_price {
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
+
+    &_amount {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 50%;
+      justify-content: space-between;
+
+      .quantity-selector {
+        height: 36px;
+        width: 146px;
+      }
+
+      &_total {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      &_delete {
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  @include tablet {
+    .cart-item {
+      &_image {
+        img {
+          height: 36px;
+          width: 36px;
+        }
+      }
+
+      &_details {
+        &_name {
+          font-size: 20px;
+        }
+
+        &_price {
+          font-size: 18px;
+        }
+      }
+
+      &_amount {
+        &_total {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    flex-direction: column;
+    gap: 36px;
+    padding: 15px 15px;
+
+    .cart-item {
+      width: 100%;
+      justify-content: flex-start;
+      &_image {
+        img {
+          height: 24px;
+          width: 24px;
+        }
+      }
+
+      &_details {
+        &_name {
+          font-size: 18px;
+        }
+
+        &_price {
+          font-size: 16px;
+        }
+      }
+
+      &_amount {
+        width: 100%;
+        justify-content: space-between;
+
+        &_total {
+          font-size: 24px;
+        }
+
+        .quantity-selector {
+          height: 36px;
+          width: 134px;
+        }
+
+        &_delete {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 40px 32px;
+  width: 100%;
+
+  h3 {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .edit-form_entry {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  select {
+    padding: 10px;
+    border: 2px solid $color-primary;
+    font-family: $font-montserrat;
+    font-size: 24px;
+    font-weight: 700;
+
+    &:focus {
+      border: 2px solid $color-secondary;
+    }
+  }
+
+  .edit-form_readonly {
+    padding: 10px;
+    border: 2px solid $color-black;
+    font-family: $font-montserrat;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .edit-form_change {
+    padding: 10px;
+    border: 2px solid $color-primary;
+    font-family: $font-montserrat;
+    font-size: 20px;
+    font-weight: 500;
+
+    &:focus {
+      border: 2px solid $color-secondary;
+    }
+  }
+
+  &_input_number {
+    width: 30%;
+  }
+
+  label {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  &_button {
+    height: 45px;
+  }
+}

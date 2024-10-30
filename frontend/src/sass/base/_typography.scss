@@ -1,0 +1,19 @@
+// Import Fonts
+@import url('https://fonts.googleapis.com/css2?family=Delius+Unicase:wght@400;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+// Global font settings
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: $color-black;
+}
+
+body {
+  @include bodyFont;
+}
+
+.error {
+  font-size: 36px;
+  font-weight: 700;
+  color: red;
+}

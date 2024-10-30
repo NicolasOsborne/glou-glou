@@ -1,0 +1,31 @@
+.dashboard-header {
+  @include cardShadow;
+  width: 100%;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .dashboard-header-entries {
+    display: grid;
+    grid-template-columns: 20px 3fr 2fr 1fr 1fr;
+    width: 90%;
+    align-items: center;
+    justify-items: center;
+
+    .dashboard-header_id,
+    .dashboard-header_entry {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+
+  @include mobile {
+    margin-left: 15px;
+    .dashboard-header_id,
+    .dashboard-header_entry {
+      font-size: 16px;
+    }
+  }
+}

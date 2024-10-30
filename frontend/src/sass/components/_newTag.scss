@@ -1,0 +1,16 @@
+.new-tag {
+  width: 95px;
+  height: 30px;
+  background-color: $color-secondary;
+  color: $color-white;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  @include buttonShadow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: -7px;
+  top: 10px;
+}
