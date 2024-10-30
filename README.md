@@ -9,6 +9,7 @@ Ce projet est structuré en deux parties :
 - Le Front-End : L'interface utilisateur.
 - Le Back-End : L'API pour gérer les fonctionnalités du site, et permettre le lien entre l'interface et la base de données.
 
+
 Ce dépôt contient le code du projet, qui est organisé en deux dossiers principaux :
 
 - frontend : Ce dossier contient le code de l'application web créée avec ReactJS.
@@ -37,6 +38,7 @@ Pour lancer l'application complète, vous devez démarrer les deux parties (Fron
 ```bash
 - git clone https://github.com/votre-nom-utilisateur/glou-et-glou.git
 - cd glou-et-glou
+
 ```
 
 - Démarrer le Backend :
